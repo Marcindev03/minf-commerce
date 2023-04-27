@@ -1,0 +1,11 @@
+{
+  "name": "minf-commerce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Marcindev03/minf-commerce.git",
+  "author": "Marcin Sacha <marcindev03@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev:web": "cd web && yarn dev"
+  }
+}
