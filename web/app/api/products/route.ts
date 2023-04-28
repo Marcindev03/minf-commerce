@@ -3,18 +3,17 @@ import { prisma } from "@modules/databse";
 import { DatabaseErrorResponse } from "@modules/server";
 
 export const GET = async (req: Request) => {
-  console.log("API", "Request URL", req.url);
-
   prisma.$connect();
 
+  // TODO improve filters
   let filters = {};
 
   const { searchParams } = new URL(req.url);
-  const categoryName = searchParams.get("categoryName");
+  const category = searchParams.get("category");
 
-  if (categoryName) {
+  if (category) {
     filters = Object.assign(filters, {
-      where: { category: { name: categoryName } },
+      where: { category: { name: category } },
     });
   }
 
