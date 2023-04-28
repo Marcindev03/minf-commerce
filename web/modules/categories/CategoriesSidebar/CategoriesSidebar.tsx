@@ -1,7 +1,23 @@
+"use client";
+import { useCategoriesQuery } from "@modules/api";
+import Link from "next/link";
 import { FC } from "react";
 
 type CategoriesSidebarProps = {};
 
 export const CategoriesSidebar: FC<CategoriesSidebarProps> = () => {
-  return <>CategoriesSidebar</>;
+  const { data } = useCategoriesQuery();
+
+  return (
+    <section>
+      <h3 className="font-bold text-2xl">Categories</h3>
+      <ul>
+        {data?.data.map(({ name }) => (
+          <li className="mt-4 hover:underline" key={name}>
+            <Link href={`/products/${name}`}>{name}</Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 };

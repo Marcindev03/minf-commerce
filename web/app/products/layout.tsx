@@ -4,6 +4,8 @@ import {
   getQueryClient,
   fetchProducts,
   useProductsQueryKey,
+  useCategoriesQueryKey,
+  fetchCategories,
 } from "@modules/api";
 import { dehydrate, Hydrate } from "@tanstack/react-query";
 import { productsLayoutImage } from "@modules/assets";
@@ -15,7 +17,12 @@ type ProductsLayoutProps = {
 // @ts-expect-error Server Component
 const ProductsLayout: FC<ProductsLayoutProps> = async ({ children }) => {
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery([useProductsQueryKey], fetchProducts);
+
+  await Promise.all([
+    queryClient.prefetchQuery([useProductsQueryKey], fetchProducts),
+    queryClient.prefetchQuery([useCategoriesQueryKey], fetchCategories),
+  ]);
+
   const dehydratedState = dehydrate(queryClient);
 
   return (
