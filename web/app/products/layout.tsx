@@ -7,6 +7,7 @@ import {
 } from "@modules/api";
 import { dehydrate, Hydrate } from "@tanstack/react-query";
 import { productsLayoutImage } from "@modules/assets";
+import { CategoriesSidebar } from "@modules/categories";
 
 type ProductsLayoutProps = {
   children: ReactNode;
@@ -31,7 +32,12 @@ const ProductsLayout: FC<ProductsLayoutProps> = async ({ children }) => {
         width={1280}
         className="max-h-80 object-cover mb-12"
       />
-      <Hydrate state={dehydratedState}>{children}</Hydrate>
+      <Hydrate state={dehydratedState}>
+        <article className="grid grid-cols-4">
+          <CategoriesSidebar />
+          {children}
+        </article>
+      </Hydrate>
     </section>
   );
 };

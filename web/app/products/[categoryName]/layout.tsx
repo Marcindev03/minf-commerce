@@ -25,11 +25,7 @@ const CategoryLayout: FC<CategoryLayoutProps> = async ({
   });
   const dehydratedState = dehydrate(queryClient);
 
-  return (
-    <section>
-      <Hydrate state={dehydratedState}>{children}</Hydrate>
-    </section>
-  );
+  return <Hydrate state={dehydratedState}>{children}</Hydrate>;
 };
 
 export default CategoryLayout;

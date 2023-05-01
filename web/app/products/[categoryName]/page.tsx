@@ -8,13 +8,8 @@ type CategoryPageProps = {
   };
 };
 
-const CategoryPage: FC<CategoryPageProps> = ({ params: { categoryName } }) => {
-  return (
-    <article className="grid grid-cols-4">
-      <CategoriesSidebar />
-      <ProductsList categoryName={categoryName} />
-    </article>
-  );
-};
+const CategoryPage: FC<CategoryPageProps> = ({ params: { categoryName } }) => (
+  <ProductsList categoryName={categoryName} />
+);
 
 export default CategoryPage;
