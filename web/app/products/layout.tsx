@@ -20,7 +20,7 @@ const ProductsLayout: FC<ProductsLayoutProps> = async ({ children }) => {
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: [useProductsQueryKey],
+      queryKey: [useProductsQueryKey, ""],
       queryFn: () => fetchProducts(),
     }),
     queryClient.prefetchQuery([useCategoriesQueryKey], fetchCategories),

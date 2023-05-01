@@ -17,8 +17,8 @@ export const fetchProducts = async (
 };
 
 export const useProductsQueryKey = "products";
-export const useProductsQuery = (categoryName?: string) =>
+export const useProductsQuery = (category: string = "") =>
   useQuery({
-    queryKey: [useProductsQueryKey, { categoryName }],
-    queryFn: () => fetchProducts(categoryName),
+    queryKey: [useProductsQueryKey, category],
+    queryFn: () => fetchProducts(category),
   });
