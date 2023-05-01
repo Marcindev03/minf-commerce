@@ -16,7 +16,7 @@ export const Navbar: FC<NavbarProps> = () => {
     <nav className="py-16">
       <ContentContainer>
         <section className="flex items-center justify-between">
-          <Link href="/products">
+          <Link href="/">
             <Image
               src={logoSvgColorTransparent}
               width={200}
