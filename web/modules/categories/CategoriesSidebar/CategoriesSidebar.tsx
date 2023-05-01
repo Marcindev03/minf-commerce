@@ -10,7 +10,7 @@ export const CategoriesSidebar: FC<CategoriesSidebarProps> = () => {
 
   return (
     <section>
-      <h3 className="font-bold text-2xl">Categories</h3>
+      <h3 className="font-bold text-2xl">Kategorie</h3>
       <ul>
         {data?.data.map(({ name }) => (
           <li className="mt-4 hover:underline" key={name}>

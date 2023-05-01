@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Providers } from "@modules/providers";
+import { Footer } from "@modules/layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
         <Providers>
           <main className="max-w-screen-xl mx-auto">{children}</main>
         </Providers>
+        <Footer />
       </body>
     </html>
   );
