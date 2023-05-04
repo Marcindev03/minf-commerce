@@ -9,11 +9,20 @@ export const GET = async (req: Request) => {
   let filters = {};
 
   const { searchParams } = new URL(req.url);
-  const category = searchParams.get("category");
 
+  const category = searchParams.get("category");
   if (category) {
     filters = Object.assign(filters, {
       where: { category: { name: category } },
+    });
+  }
+
+  const ids = searchParams.get("ids");
+  if (ids?.length) {
+    const idsArray = ids.split(",").map((id) => +id);
+
+    filters = Object.assign(filters, {
+      where: { id: { in: idsArray } },
     });
   }
 
@@ -22,8 +31,9 @@ export const GET = async (req: Request) => {
 
     return NextResponse.json({ data: products });
   } catch (err) {
+    console.log(err);
     return new DatabaseErrorResponse();
   } finally {
-    prisma.$disconnect;
+    prisma.$disconnect();
   }
 };

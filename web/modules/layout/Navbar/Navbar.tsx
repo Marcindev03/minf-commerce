@@ -13,8 +13,13 @@ export const Navbar: FC<NavbarProps> = () => {
   const { data } = useCategoriesQuery();
 
   return (
-    <nav className="py-16">
+    <nav className="pb-16">
       <ContentContainer>
+        <section className="py-4 flex justify-end w-full">
+          <Link href="/cart" className="hover:underline">
+            Koszyk
+          </Link>
+        </section>
         <section className="flex items-center justify-between">
           <Link href="/">
             <Image

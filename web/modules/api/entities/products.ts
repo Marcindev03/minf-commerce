@@ -4,11 +4,13 @@ import qs from "querystringify";
 import { restClient } from "../client";
 
 export const fetchProducts = async (
-  categoryName?: string
+  categoryName?: string,
+  productsIds?: string
 ): Promise<{ data: Product[] }> => {
   const query = qs.stringify(
     {
       category: categoryName,
+      ids: productsIds,
     },
     true
   );
@@ -17,11 +19,17 @@ export const fetchProducts = async (
 };
 
 export const useProductsQueryKey = "products";
-export const useProductsQuery = (category: string = "") =>
-  useQuery({
-    queryKey: [useProductsQueryKey, category],
-    queryFn: () => fetchProducts(category),
+export const useProductsQuery = (
+  category: string = "",
+  productsIds: string[] = []
+) => {
+  const ids = productsIds.length ? productsIds.join(",") : "";
+
+  return useQuery({
+    queryKey: [useProductsQueryKey, category, ids],
+    queryFn: () => fetchProducts(category, ids),
   });
+};
 
 export const fetchProduct = async (
   productId: string
