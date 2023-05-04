@@ -5,3 +5,11 @@ export class DatabaseErrorResponse extends Response {
     });
   }
 }
+
+export class NotFoundErrorResponse extends Response {
+  constructor() {
+    super(JSON.stringify({ data: null, error: "Not Found" }), {
+      status: 404,
+    });
+  }
+}

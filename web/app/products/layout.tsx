@@ -8,6 +8,7 @@ import {
 import { dehydrate, Hydrate } from "@tanstack/react-query";
 import { productsLayoutImage } from "@modules/assets";
 import { CategoriesSidebar } from "@modules/categories";
+import { CustomNextImage } from "@modules/common";
 
 type ProductsLayoutProps = {
   children: ReactNode;
@@ -26,11 +27,13 @@ const ProductsLayout: FC<ProductsLayoutProps> = async ({ children }) => {
 
   return (
     <section>
-      <Image
+      <CustomNextImage
         src={productsLayoutImage}
         alt={"Products Layout Image"}
         width={1280}
         className="max-h-80 object-cover mb-12"
+        priority
+        loading="eager"
       />
       <Hydrate state={dehydratedState}>
         <article className="grid grid-cols-4">

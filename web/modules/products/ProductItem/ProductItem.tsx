@@ -12,7 +12,7 @@ export const ProductItem: FC<ProductItemProps> = ({
   imageUrl,
 }) => (
   <article className="rounded-lg shadow-md overflow-hidden">
-    <Link href={`/products/${id}`}>
+    <Link href={`/product/${id}`}>
       <Image
         src={imageUrl}
         alt={name}
