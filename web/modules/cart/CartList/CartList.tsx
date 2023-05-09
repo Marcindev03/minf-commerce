@@ -3,6 +3,7 @@ import { useProductsQuery } from "@modules/api";
 import Link from "next/link";
 import { FC, useEffect, useMemo, useState } from "react";
 import { CartItem } from "../CartItem";
+import { DeliveryForm } from "@modules/order/DeliveryForm";
 
 type CartListProps = {};
 
@@ -47,9 +48,15 @@ export const CartList: FC<CartListProps> = () => {
         />
       ))}
       <div className="grid grid-cols-2">
-        <article className="mt-8 col-span-1 col-start-2">
+        <article className="mt-8 col-span-1 col-start-2 shadow-md p-8">
           <h3 className="text-2xl">Podsumowanie zamówienia</h3>
           <p className="my-8">Kwota zamówienia: {orderSum} zł</p>
+
+          <hr />
+
+          <section className="mb-8">
+            <DeliveryForm />
+          </section>
 
           <section>
             <Link href="/cart/order">
