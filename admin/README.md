@@ -1,72 +1,135 @@
-# TailAdmin React - Free React Tailwind Admin Dashboard Template
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app --typescript`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-TailAdmin is a free and open-source admin dashboard template built on **React and Tailwind CSS**, providing developers with everything they need to create a comprehensive, data-driven back-end, 
-dashboard, or admin panel solution for upcoming web projects.
+## Next.JS Dashboard
 
-[![tailwind react admin template](https://ucarecdn.com/d2a6daed-eb9c-4c2f-8a95-4419c450e23a/tailadminreact.jpg)](https://react-demo.tailadmin.com/)
+A Next.JS boilerplate with the famous Open Source Boostrap Admin Template, [CoreUI](https://coreui.io/).
 
+This dashboard is built with `Typescript` and implement some layouts, with [React Bootstrap](https://react-bootstrap.github.io/).
 
-With TailAdmin, you get access to all the necessary dashboard UI components, elements, and pages required to build a feature-rich and complete dashboard or admin panel. Whether you're building dashboard or admin panel for a complex web application or a simple website, TailAdmin is the perfect solution to help you get up and running quickly.
+![Powered by Vercel](https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg)
 
-### [✨ Visit Website](https://tailadmin.com/)
+## Screenshot
 
-### [🚀 PRO Demo](https://react-demo.tailadmin.com/)
-### [🚀 FREE Demo](https://free-react-demo.tailadmin.com/)
+### Dashboard
 
-### TailAdmin React PRO vs TailAdmin React FREE Comparison 📊
+https://nextjs-dashboard-olive.vercel.app
 
-#### [TailAdmin React PRO](https://react-demo.tailadmin.com/)
-- 4 Unique Dashboards: Analytics, Ecommerce, Marketing, and CRM (More will be added)
-- 120+ Dashboard UI Components
-- 200+ Total UI Elements
-- 45+ HTML Files
-- All Essential Elements and Files
-- Full Figma Design Source - As Shown on Demo
+[<img alt="Dashboard" width="400" src="https://user-images.githubusercontent.com/7660346/180629352-f92216e3-7cf4-4fba-92fa-089dd96b4478.png" />](https://nextjs-dashboard-olive.vercel.app)
 
-___
+| Mobile (collapsed)                                                                                                                                                                           | Mobile (expand)                                                                                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [<img alt="Dashboard" height="278" src="https://user-images.githubusercontent.com/7660346/190973509-f681c230-54ba-4ee5-bd8c-7929ef24b6aa.png" />](https://nextjs-dashboard-olive.vercel.app) | [<img alt="Dashboard" height="278" src="https://user-images.githubusercontent.com/7660346/190973862-29c311ab-8867-4399-ad4d-01f2d073d7a2.png" />](https://nextjs-dashboard-olive.vercel.app) |
 
-#### [TailAdmin React FREE](https://free-react-demo.tailadmin.com/)
-- 1 Unique Dashboard
-- 30+ Dashboard UI Components
-- 50+ Total UI Elements 
-- 10+ HTML Files
-- TypeScript Support
-- Basic UI Kit Elements and Files
-- Figma Design Source - Free Sample
-___
+### Sample page
 
-### [⬇️ Download Now](https://tailadmin.com/download)
+https://nextjs-dashboard-olive.vercel.app/pokemons
 
-### [⚡ Get PRO Version](https://tailadmin.com/pricing)
+[<img alt="Sample page" width="400" src="https://user-images.githubusercontent.com/7660346/183112188-75ffbd15-e7ef-455f-994b-945df16e5846.png">](https://nextjs-dashboard-olive.vercel.app/pokemons)
 
-### [📄 Documentation/Installation](https://tailadmin.com/docs)
+### Login
 
-### [🖌️ TailAdmin Figma Free Sample](https://www.figma.com/community/file/1214477970819985778)
+https://nextjs-dashboard-olive.vercel.app/login
 
-### [👉 TailAdmin HTML Version](https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template)
+[<img alt="Login" width="400" src="https://user-images.githubusercontent.com/7660346/180629556-539b6157-b34f-4ecc-aed9-b34f94d5d2ef.png" />](https://nextjs-dashboard-olive.vercel.app/login)
 
-TailAdmin React dashboard template based on Tailwind CSS is a pre-designed starting point for building a web-based dashboard using the React JavaScript library and the Tailwind CSS utility-first framework. This Tailwind CSS + React Dashboard Template - built using Tailwind CSS and **includes pre-built components, such as navigation menus, charts, tables, and forms, which can be easily customized and integrated into a small-to-large React web application**.
+### Register
 
-If you're looking for a high-quality **React-Tailwind Dashboard, Admin Panel Template, or UI Kit**, TailAdmin will be the perfect choice for you!
+https://nextjs-dashboard-olive.vercel.app/register
 
-## TailAdmin React - Installation
+[<img alt="Register" width="400" src="https://user-images.githubusercontent.com/7660346/180629498-1b23eb9a-cfd4-4909-8c02-58eaf6b06ff5.png" />](https://nextjs-dashboard-olive.vercel.app/register)
 
-You'll need to install Node.js >=v14.16+ (Recommended Version) (NPM comes along with it) and TailAdmin uses **Vite** for frontend tooling, to peform installation and building production version, please follow these steps from below:
+## Getting Started
 
-- Use terminal and navigate to the project (tailadmin-react) root.
+First, setup the application:
 
-- Then run : <code>npm install</code>
+```bash
+pnpm install
+```
 
-- Then run : <code>npm run dev</code>
+Then, run the development server:
 
-Now, in the browser go to <code>localhost:5173</code>
+```bash
+pnpm run dev
+```
 
-**For Production Build**
-Run : <code>npm run build</code>
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Default build output directory: /dist
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-This command will generate a dist as build folder in the root of your template that you can upload to your server.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-## Tons of React Tailwind Components for Dashboard
-React and Tailwind are two popular technologies that have taken the web development world by storm. React is a JavaScript library for building user interfaces, while Tailwind is a utility-first CSS framework that makes it easy to style web applications. TailAdmin React Offers 200+ Essential React + Tailwind CSS UI Components that you copy-paste and use with your dashboard projects. That includes - charts, graphs, navbars, tabs, buttons, cards, tables, profile, tabs, forms, modals, app pages, calender, web apps example templates and more... for React and Styled using Tailwind CSS
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Next.JS Rendering
+
+<details>
+  <summary>Click to expand</summary>
+
+### Pre-rendering
+
+By default, Next.js pre-renders every page. This means that Next.js generates HTML for each page in advance, instead of having it all done by client-side JavaScript. Pre-rendering can result in better performance and SEO.
+
+### SSR: Server-side rendering
+
+Next.js will pre-render this page on **each request** using the data returned by `getServerSideProps`.
+
+https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
+
+### SSG: Static-site generation
+
+Next.js will pre-render this page at **build time** using the props returned by `getStaticProps`.
+
+* In development (next dev), getStaticProps will be called on every request.
+
+https://nextjs.org/docs/basic-features/data-fetching/get-static-props
+
+### CSR: Client-side rendering
+
+If done at the page level, the data is fetched at runtime, and the content of the page is updated as the data changes. When used at the component level, the data is fetched at the time of the component mount, and the content of the component is updated as the data changes.
+
+It is **highly recommended** to use [SWR](https://swr.vercel.app/) if you are fetching data on the client-side. It handles caching, revalidation, focus tracking, refetching on intervals, and more.
+
+https://nextjs.org/docs/basic-features/data-fetching/client-side
+
+### ISR: Incremental Static Regeneration
+
+Next.js allows you to create or update static pages **after you’ve built** your site.
+
+To use ISR, add the `revalidate` prop to `getStaticProps`.
+
+https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
+
+</details>
+
+## Installed Packages
+
+1. [Redux](https://redux.js.org/tutorials/fundamentals/part-1-overview)
+   1. [React redux](https://react-redux.js.org/introduction/getting-started)
+   2. [Redux toolkit](https://redux-toolkit.js.org/tutorials/quick-start)
+2. [Axios](https://github.com/axios/axios)
+3. [React-bootstrap](https://react-bootstrap.github.io/)
+4. [Immer](https://github.com/immerjs/immer)
+5. [react-fontawesome](https://fontawesome.com/docs/web/use-with/react/)
+   1. https://fontawesome.com/docs/web/use-with/react/use-with#next-js
+   2. https://fontawesome.com/docs/web/use-with/react/add-icons#dynamic-icon-importing
+6. [SWR](https://swr.vercel.app/)
+7. [Eslint](https://eslint.org/)
+   1. https://github.com/typescript-eslint/typescript-eslint
+   2. https://github.com/jsx-eslint/eslint-plugin-react
+   3. https://reactjs.org/docs/hooks-rules.html#eslint-plugin
+   4. https://www.npmjs.com/package/eslint-config-airbnb
+   5. https://www.npmjs.com/package/eslint-config-airbnb-typescript
+   6. https://github.com/prettier/eslint-config-prettier
+
+## Reference
+
+1. https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/
