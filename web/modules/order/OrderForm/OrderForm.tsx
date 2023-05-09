@@ -1,6 +1,5 @@
 "use client";
 import { CustomFormControl } from "@modules/common";
-import { inputStyles } from "@modules/styles";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,7 +23,7 @@ export const OrderForm: FC<OrderFormProps> = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit = (data) => console.debug(data);
+  const onSubmit = (data: Inputs) => console.debug(data);
 
   return (
     <form

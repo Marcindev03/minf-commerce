@@ -1,4 +1,5 @@
-export * from "./CartList";
+export { CartList } from "./CartList";
+export { CartItem } from "./CartItem";
 
 export const addItemToCart = (productId: string) => {
   const cart = getCartItems();

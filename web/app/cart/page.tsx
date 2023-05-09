@@ -3,8 +3,6 @@ import { FC } from "react";
 
 type CartPageProps = {};
 
-const CartPage: FC<CartPageProps> = () => {
-  return <CartList />;
-};
+const CartPage: FC<CartPageProps> = () => <CartList />;
 
 export default CartPage;
