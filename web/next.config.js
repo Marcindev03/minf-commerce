@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["loremflickr.com"],
+    domains: ["upload.cdn.baselinker.com"],
   },
   experimental: {
     appDir: true,

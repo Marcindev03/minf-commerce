@@ -3,12 +3,16 @@ import { CustomFormControl } from "@modules/common";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 
+type Inputs = {
+  delivery: "dpd" | "inpost";
+};
+
 type DeliveryFormProps = {};
 
 export const DeliveryForm: FC<DeliveryFormProps> = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<Inputs>();
 
-  const onSubmit = (data) => console.debug(data);
+  const onSubmit = (data: Inputs) => console.debug(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">

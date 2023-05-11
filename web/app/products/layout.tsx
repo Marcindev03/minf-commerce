@@ -1,10 +1,9 @@
 import { FC, ReactNode } from "react";
-import Image from "next/image";
 import {
   getQueryClient,
   fetchProducts,
   useProductsQueryKey,
-} from "@modules/api";
+} from "@modules/api/client";
 import { dehydrate, Hydrate } from "@tanstack/react-query";
 import { productsLayoutImage } from "@modules/assets";
 import { CategoriesSidebar } from "@modules/categories";

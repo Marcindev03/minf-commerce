@@ -3,7 +3,7 @@ import {
   getQueryClient,
   fetchProducts,
   useProductsQueryKey,
-} from "@modules/api";
+} from "@modules/api/client";
 import { dehydrate, Hydrate } from "@tanstack/react-query";
 
 type CategoryLayoutProps = {

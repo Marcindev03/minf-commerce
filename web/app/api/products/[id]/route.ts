@@ -1,3 +1,4 @@
+import { getProduct } from "@modules/api/server";
 import { prisma } from "@modules/databse";
 import { DatabaseErrorResponse, NotFoundErrorResponse } from "@modules/server";
 import { NextResponse } from "next/server";
@@ -15,11 +16,7 @@ export const GET = async (
   const productId = params.id;
 
   try {
-    prisma.$connect();
-
-    const product = await prisma.product.findUnique({
-      where: { id: +productId },
-    });
+    const product = await getProduct(productId);
 
     if (!product) {
       return new NotFoundErrorResponse();

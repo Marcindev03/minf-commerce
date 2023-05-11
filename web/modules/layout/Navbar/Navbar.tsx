@@ -4,7 +4,7 @@ import { ContentContainer } from "../ContentContainer";
 import Image from "next/image";
 import { logoSvgColorTransparent } from "@modules/assets";
 import Link from "next/link";
-import { useCategoriesQuery } from "@modules/api";
+import { useCategoriesQuery } from "@modules/api/client";
 import { NavbarItem } from "./components";
 
 type NavbarProps = {};

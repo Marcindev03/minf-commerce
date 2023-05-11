@@ -1,20 +1,20 @@
 import { FC } from "react";
 import Image from "next/image";
-import { Product } from "@prisma/client";
+import { Product } from "@modules/api/types";
 import Link from "next/link";
 
 type ProductItemProps = {} & Product;
 
 export const ProductItem: FC<ProductItemProps> = ({
-  id,
-  name,
-  price,
-  imageUrl,
+  product_id,
+  text_fields: { name },
+  prices,
+  images,
 }) => (
   <article className="rounded-lg shadow-md overflow-hidden">
-    <Link href={`/product/${id}`}>
+    <Link href={`/product/${product_id}`}>
       <Image
-        src={imageUrl}
+        src={images?.[0]}
         alt={name}
         width={320}
         height={100}
@@ -22,7 +22,7 @@ export const ProductItem: FC<ProductItemProps> = ({
       />
       <section className="flex flex-col items-center p-4">
         <p>{name}</p>
-        <p>{price} PLN</p>
+        <p>{prices?.[0]} PLN</p>
       </section>
     </Link>
   </article>

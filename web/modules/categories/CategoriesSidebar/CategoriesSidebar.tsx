@@ -1,5 +1,5 @@
 "use client";
-import { useCategoriesQuery } from "@modules/api";
+import { useCategoriesQuery } from "@modules/api/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";

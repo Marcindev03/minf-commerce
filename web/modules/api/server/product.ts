@@ -1,18 +1,30 @@
-import { getProducts as getBaselinkerProducs } from "@modules/baselinker";
+import {
+  ProductData,
+  getProducts as getBaselinkerProducs,
+  getProduct as getBaselinkerProduct,
+} from "@modules/baselinker";
+
+const transformProducts = (products: { [key: string]: ProductData }) =>
+  Array.from(Object.entries(products)).map(([productId, product]) => ({
+    ...product,
+    product_id: productId,
+    images: Array.from(Object.values(product.images)),
+    prices: Array.from(Object.values(product.prices)),
+    quantity: Object.values(product.stock)?.[0] ?? 0,
+  }));
 
 export const getProducts = async () => {
   const baselinkerProducts = await getBaselinkerProducs();
 
-  const products = Array.from(Object.entries(baselinkerProducts.products)).map(
-    ([productId, product]) => ({
-      ...product,
-      product_id: productId,
-      images: Array.from(Object.values(product.images)),
-      prices: Array.from(Object.values(product.prices)),
-    })
-  );
+  const products = transformProducts(baselinkerProducts.products);
 
   return products;
 };
 
-export const getProduct = async (productId: string) => {};
+export const getProduct = async (productId: string) => {
+  const baselinkerProduct = await getBaselinkerProduct(productId);
+
+  const product = transformProducts(baselinkerProduct)?.[0] ?? null;
+
+  return product;
+};

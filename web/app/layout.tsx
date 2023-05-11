@@ -7,7 +7,7 @@ import {
   fetchCategories,
   getQueryClient,
   useCategoriesQueryKey,
-} from "@modules/api";
+} from "@modules/api/client";
 
 const inter = Inter({ subsets: ["latin"] });
 

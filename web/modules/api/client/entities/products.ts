@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "@prisma/client";
+import { Product } from "@modules/api/types";
 import qs from "querystringify";
 import { restClient } from "..";
 

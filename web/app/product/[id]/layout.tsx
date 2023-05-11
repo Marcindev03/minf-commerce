@@ -1,5 +1,9 @@
 import { FC, ReactNode } from "react";
-import { getQueryClient, useProductQueryKey, fetchProduct } from "@modules/api";
+import {
+  getQueryClient,
+  useProductQueryKey,
+  fetchProduct,
+} from "@modules/api/client";
 import { dehydrate, Hydrate } from "@tanstack/react-query";
 
 type ProductLayoutProps = {

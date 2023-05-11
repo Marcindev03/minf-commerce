@@ -37,3 +37,11 @@ export const getProducts = async () => {
 
   return data;
 };
+
+export const getProduct = async (productId: string) => {
+  const inventoryId = await getMainInventoryId();
+
+  const { products } = await getInventoryProductsData(inventoryId, [productId]);
+
+  return products;
+};

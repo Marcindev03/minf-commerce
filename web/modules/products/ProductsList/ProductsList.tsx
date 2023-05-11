@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { useProductsQuery } from "@modules/api";
+import { useProductsQuery } from "@modules/api/client";
 import { ProductItem } from "../ProductItem";
 import Link from "next/link";
 
@@ -24,7 +24,7 @@ export const ProductsList: FC<ProductsListProps> = ({ categoryName }) => {
       </article>
       <section className="grid grid-cols-3  gap-10">
         {data?.data?.map((product) => (
-          <ProductItem key={product.id} {...product} />
+          <ProductItem key={product.product_id} {...product} />
         ))}
       </section>
     </section>

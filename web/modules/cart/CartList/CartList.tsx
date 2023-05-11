@@ -1,5 +1,5 @@
 "use client";
-import { useProductsQuery } from "@modules/api";
+import { useProductsQuery } from "@modules/api/client";
 import Link from "next/link";
 import { FC, useEffect, useMemo, useState } from "react";
 import { CartItem } from "../CartItem";
@@ -42,7 +42,7 @@ export const CartList: FC<CartListProps> = () => {
       </article>
       {data?.data.map((product) => (
         <CartItem
-          key={product.name}
+          key={product.text_fields.name}
           product={product}
           onQuanityChange={handleQuanityChange}
         />
