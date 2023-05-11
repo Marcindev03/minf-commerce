@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@prisma/client";
 import qs from "querystringify";
-import { restClient } from "../client";
+import { restClient } from "..";
 
 export const fetchProducts = async (
   categoryName?: string,

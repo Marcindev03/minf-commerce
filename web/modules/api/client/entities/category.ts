@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Category } from "@prisma/client";
-import { restClient } from "../client";
+import { restClient } from "..";
 
 export const fetchCategories = async (): Promise<{ data: Category[] }> =>
   restClient("/categories");
