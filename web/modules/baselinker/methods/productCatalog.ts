@@ -1,5 +1,6 @@
 import { baselinkerClient } from "../client";
 import {
+  CategoriesResponse,
   InventoriesResponse,
   ProductListResponse,
   ProductsDataResponse,
@@ -20,6 +21,11 @@ export const getInventoryProductsData = async (
   await baselinkerClient<ProductsDataResponse>("getInventoryProductsData", {
     inventory_id: inventoryId,
     products: productsIds,
+  });
+
+export const getInventoryCategories = async (inventoryId: number) =>
+  await baselinkerClient<CategoriesResponse>("getInventoryCategories", {
+    inventory_id: inventoryId,
   });
 
 export const getMainInventoryId = async () => {
@@ -44,4 +50,12 @@ export const getProduct = async (productId: string) => {
   const { products } = await getInventoryProductsData(inventoryId, [productId]);
 
   return products;
+};
+
+export const getCategories = async () => {
+  const inventoryId = await getMainInventoryId();
+
+  const { categories } = await getInventoryCategories(inventoryId);
+
+  return categories;
 };

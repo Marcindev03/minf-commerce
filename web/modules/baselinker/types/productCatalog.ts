@@ -104,3 +104,14 @@ export interface ProductsDataResponse {
     [key: string]: ProductData;
   };
 }
+
+export interface Category {
+  category_id: number;
+  name: string;
+  parent_id: number;
+}
+
+export interface CategoriesResponse {
+  status: Status;
+  categories: Category[];
+}
