@@ -22,7 +22,7 @@ const CategoryLayout: FC<CategoryLayoutProps> = async ({
 
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
-    queryKey: [useProductsQueryKey, decodedCategoryName, ""],
+    queryKey: [useProductsQueryKey, decodedCategoryName, "", null],
     queryFn: () => fetchProducts(decodedCategoryName),
   });
   const dehydratedState = dehydrate(queryClient);

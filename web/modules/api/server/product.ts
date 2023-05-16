@@ -16,6 +16,7 @@ const transformProducts = (products: { [key: string]: ProductData }) =>
 
 type GetProductsParams = {
   categoryName?: string;
+  limit?: number;
 };
 
 export const getProducts = async (params?: GetProductsParams) => {
@@ -24,8 +25,12 @@ export const getProducts = async (params?: GetProductsParams) => {
   if (params?.categoryName) {
     getBaselinkerProducsParams.set(
       "categoryId",
-      await getCategoryIdByName(params?.categoryName)
+      await getCategoryIdByName(params.categoryName)
     );
+  }
+
+  if (params?.limit) {
+    getBaselinkerProducsParams.set("limit", params.limit);
   }
 
   const baselinkerProducts = await getBaselinkerProducs(

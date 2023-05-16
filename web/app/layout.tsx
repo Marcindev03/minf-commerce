@@ -11,6 +11,7 @@ import {
   useProductsQueryKey,
 } from "@modules/api/client";
 import { Category } from "@modules/api/types";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,21 +26,25 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery([useCategoriesQueryKey], fetchCategories);
 
+  await queryClient.prefetchQuery([useCategoriesQueryKey], fetchCategories);
   const categories = queryClient.getQueryData([useCategoriesQueryKey]) as {
     data: Category[];
   };
 
-  await Promise.all(
-    categories.data.map(
+  await Promise.all([
+    ...categories.data.map(
       async ({ name }) =>
         await queryClient.prefetchQuery({
-          queryKey: [useProductsQueryKey, name, ""],
-          queryFn: () => fetchProducts(),
+          queryKey: [useProductsQueryKey, name, "", 4],
+          queryFn: () => fetchProducts(name, "", 4),
         })
-    )
-  );
+    ),
+    queryClient.prefetchQuery({
+      queryKey: [useProductsQueryKey, "", "", 4],
+      queryFn: () => fetchProducts("", "", 4),
+    }),
+  ]);
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -54,6 +59,7 @@ export default async function RootLayout({
             </ContentContainer>
             <Footer />
           </Hydrate>
+          <ReactQueryDevtools initialIsOpen />
         </Providers>
       </body>
     </html>

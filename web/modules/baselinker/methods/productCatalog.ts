@@ -43,13 +43,16 @@ export const getMainInventoryId = async () => {
 
 export type GetProductsParams = {
   categoryId?: string;
+  limit?: number;
 };
 
 export const getProducts = async (params?: GetProductsParams) => {
   const inventoryId = await getMainInventoryId();
 
-  const { products } = await getInventoryProductsList(inventoryId, params);
-  const productsIds = Array.from(Object.keys(products));
+  const { products } = await getInventoryProductsList(inventoryId, {
+    categoryId: params?.categoryId,
+  });
+  const productsIds = Array.from(Object.keys(products)).slice(0, params?.limit);
 
   const data = await getInventoryProductsData(inventoryId, productsIds);
 

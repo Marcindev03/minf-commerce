@@ -5,10 +5,12 @@ import { restClient } from "..";
 
 export const fetchProducts = async (
   categoryName?: string,
-  productsIds?: string
+  productsIds?: string,
+  limit?: number | null
 ): Promise<{ data: Product[] }> => {
   const query = qs.stringify(
     {
+      limit,
       category: categoryName,
       ids: productsIds,
     },
@@ -21,13 +23,15 @@ export const fetchProducts = async (
 export const useProductsQueryKey = "products";
 export const useProductsQuery = (
   category: string = "",
-  productsIds: string[] = []
+  productsIds: string[] = [],
+  limit?: number
 ) => {
   const ids = productsIds.length ? productsIds.join(",") : "";
+  const productsLimit = limit ?? null;
 
   return useQuery({
-    queryKey: [useProductsQueryKey, category, ids],
-    queryFn: () => fetchProducts(category, ids),
+    queryKey: [useProductsQueryKey, category, ids, productsLimit],
+    queryFn: () => fetchProducts(category, ids, productsLimit),
   });
 };
 

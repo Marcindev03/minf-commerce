@@ -1,0 +1,12 @@
+{
+  "fullAppName": "MinfCommerce",
+  "shortcutAppName": "MinfCommerce",
+  "meta": {
+    "title": "MinfCommerce",
+    "description": "lorem ipsum dolor sit amet"
+  },
+  "contact": {
+    "email": "order@minfcommerce.com",
+    "phoneNumber": "+48 111222333"
+  }
+}

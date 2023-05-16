@@ -8,7 +8,13 @@ type ProvidersProps = {
 };
 
 export const Providers: FC<ProvidersProps> = ({ children }) => {
-  const queryClient = useMemo(() => new QueryClient(), []);
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        defaultOptions: { queries: { refetchOnMount: false } },
+      }),
+    []
+  );
 
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

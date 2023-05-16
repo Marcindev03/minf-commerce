@@ -1,3 +1,4 @@
+"use client";
 import { useProductsQuery } from "@modules/api/client";
 import { FC } from "react";
 import { ProductItem } from "../ProductItem";
@@ -7,7 +8,7 @@ type ProductsRowProps = {
 };
 
 export const ProductsRow: FC<ProductsRowProps> = ({ category }) => {
-  const { data } = useProductsQuery(category);
+  const { data } = useProductsQuery(category, [], 4);
 
   return (
     <section className="grid grid-cols-4 gap-12">
