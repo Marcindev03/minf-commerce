@@ -4,12 +4,15 @@ import { DatabaseErrorResponse } from "@modules/server";
 import { getProducts } from "@modules/api/server";
 
 export const GET = async (req: Request) => {
-  // const { searchParams } = new URL(req.url);
-  // const category = searchParams.get("category");
+  const { searchParams } = new URL(req.url);
+
+  const category = searchParams.get("category");
   // const ids = searchParams.get("ids")?.split(",") ?? [];
 
   try {
-    const products = await getProducts();
+    const products = await getProducts({
+      categoryName: category ? decodeURI(category) : undefined,
+    });
 
     return NextResponse.json({ data: products });
   } catch (err) {

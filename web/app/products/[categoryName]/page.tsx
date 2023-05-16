@@ -1,4 +1,3 @@
-import { CategoriesSidebar } from "@modules/categories";
 import { ProductsList } from "@modules/products";
 import { FC } from "react";
 
@@ -9,7 +8,7 @@ type CategoryPageProps = {
 };
 
 const CategoryPage: FC<CategoryPageProps> = ({ params: { categoryName } }) => (
-  <ProductsList categoryName={categoryName} />
+  <ProductsList categoryName={decodeURI(categoryName)} />
 );
 
 export default CategoryPage;

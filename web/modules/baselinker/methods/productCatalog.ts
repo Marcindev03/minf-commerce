@@ -9,9 +9,17 @@ import {
 export const getInventories = async () =>
   await baselinkerClient<InventoriesResponse>("getInventories");
 
-export const getInventoryProductsList = async (inventoryId: number) =>
+export type GetInventoryProductsListParams = {
+  categoryId?: string;
+};
+
+export const getInventoryProductsList = async (
+  inventoryId: number,
+  params?: GetInventoryProductsListParams
+) =>
   await baselinkerClient<ProductListResponse>("getInventoryProductsList", {
     inventory_id: inventoryId,
+    filter_category_id: params?.categoryId,
   });
 
 export const getInventoryProductsData = async (
@@ -33,10 +41,14 @@ export const getMainInventoryId = async () => {
   return inventories[0].inventory_id;
 };
 
-export const getProducts = async () => {
+export type GetProductsParams = {
+  categoryId?: string;
+};
+
+export const getProducts = async (params?: GetProductsParams) => {
   const inventoryId = await getMainInventoryId();
 
-  const { products } = await getInventoryProductsList(inventoryId);
+  const { products } = await getInventoryProductsList(inventoryId, params);
   const productsIds = Array.from(Object.keys(products));
 
   const data = await getInventoryProductsData(inventoryId, productsIds);
@@ -58,4 +70,10 @@ export const getCategories = async () => {
   const { categories } = await getInventoryCategories(inventoryId);
 
   return categories;
+};
+
+export const getCategoryIdByName = async (categoryName: string) => {
+  const categories = await getCategories();
+
+  return categories.find(({ name }) => name === categoryName)?.category_id;
 };
