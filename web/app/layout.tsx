@@ -5,9 +5,12 @@ import { Providers } from "@modules/providers";
 import { ContentContainer, Footer, Navbar } from "@modules/layout";
 import {
   fetchCategories,
+  fetchProducts,
   getQueryClient,
   useCategoriesQueryKey,
+  useProductsQueryKey,
 } from "@modules/api/client";
+import { Category } from "@modules/api/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +26,21 @@ export default async function RootLayout({
 }) {
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery([useCategoriesQueryKey], fetchCategories);
+
+  const categories = queryClient.getQueryData([useCategoriesQueryKey]) as {
+    data: Category[];
+  };
+
+  await Promise.all(
+    categories.data.map(
+      async ({ name }) =>
+        await queryClient.prefetchQuery({
+          queryKey: [useProductsQueryKey, name, ""],
+          queryFn: () => fetchProducts(),
+        })
+    )
+  );
+
   const dehydratedState = dehydrate(queryClient);
 
   return (
