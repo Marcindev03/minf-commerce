@@ -3,6 +3,7 @@ import {
   getProducts as getBaselinkerProducs,
   getProduct as getBaselinkerProduct,
   getCategoryIdByName,
+  GetProductsParams as getBaselinkerProducsParams,
 } from "@modules/baselinker";
 
 const transformProducts = (products: { [key: string]: ProductData }) =>
@@ -17,10 +18,14 @@ const transformProducts = (products: { [key: string]: ProductData }) =>
 type GetProductsParams = {
   categoryName?: string;
   limit?: number;
+  ids?: number[];
 };
 
 export const getProducts = async (params?: GetProductsParams) => {
-  const getBaselinkerProducsParams = new Map<string, unknown>();
+  const getBaselinkerProducsParams = new Map<
+    keyof getBaselinkerProducsParams,
+    unknown
+  >();
 
   if (params?.categoryName) {
     getBaselinkerProducsParams.set(
@@ -33,6 +38,10 @@ export const getProducts = async (params?: GetProductsParams) => {
     getBaselinkerProducsParams.set("limit", params.limit);
   }
 
+  if (params?.ids?.length) {
+    getBaselinkerProducsParams.set("productsIds", params.ids);
+  }
+
   const baselinkerProducts = await getBaselinkerProducs(
     Object.fromEntries(getBaselinkerProducsParams)
   );
@@ -42,7 +51,7 @@ export const getProducts = async (params?: GetProductsParams) => {
   return products;
 };
 
-export const getProduct = async (productId: string) => {
+export const getProduct = async (productId: number) => {
   const baselinkerProduct = await getBaselinkerProduct(productId);
 
   const product = transformProducts(baselinkerProduct)?.[0] ?? null;

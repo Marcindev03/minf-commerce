@@ -8,12 +8,17 @@ export const GET = async (req: Request) => {
 
   const category = searchParams.get("category");
   const limit = searchParams.get("limit");
-  // const ids = searchParams.get("ids")?.split(",") ?? [];
+  const ids =
+    searchParams
+      .get("ids")
+      ?.split(",")
+      .map((id) => +id) ?? [];
 
   try {
     const products = await getProducts({
       categoryName: category ? decodeURI(category) : undefined,
       limit: limit ? +limit : undefined,
+      ids,
     });
 
     return NextResponse.json({ data: products });
