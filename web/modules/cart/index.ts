@@ -10,8 +10,22 @@ export const addItemToCart = (productId: string) => {
 
   cart.push(productId);
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  saveCartInLocalStorage(cart);
 };
+
+export const removeCartItem = (productId: string) => {
+  const cart = getCartItems();
+
+  const productIndex = cart.findIndex((id) => productId === id);
+  cart.splice(productIndex - 1, productIndex);
+
+  console.debug(cart);
+
+  saveCartInLocalStorage(cart);
+};
+
+const saveCartInLocalStorage = (cart: string[]) =>
+  localStorage.setItem("cart", JSON.stringify(cart));
 
 export const getCartItems = () => {
   const cartJson = localStorage.getItem("cart");

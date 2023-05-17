@@ -1,10 +1,7 @@
 "use client";
-import { CustomNextImage } from "@modules/common";
-import { inputStyles } from "@modules/styles";
 import { Product } from "@modules/api/types";
-import classNames from "classnames";
+import Link from "next/link";
 import { FC, useEffect, useState } from "react";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 type CartItemProps = {
   product: Product;
@@ -13,6 +10,7 @@ type CartItemProps = {
 
 export const CartItem: FC<CartItemProps> = ({
   product: {
+    product_id,
     text_fields: { name },
     prices: [price],
     images: [imageUrl],
@@ -34,27 +32,61 @@ export const CartItem: FC<CartItemProps> = ({
   };
 
   return (
-    <article className="w-full grid grid-cols-12 gap-4 px-6 py-4 border-b border-b-slate-300">
-      <section className="relative col-span-2 h-20">
-        <CustomNextImage src={imageUrl} fill alt={name} />
-      </section>
-      <p className="col-span-4">{name}</p>
-      <p className="col-span-2">{price} zł</p>
-      <section className="flex justify-between items-center">
-        <button onClick={() => handleQuanityChange(amount - 1)}>
-          <AiOutlineMinus />
-        </button>
-        <input
-          type="number"
-          className={classNames(inputStyles, "h-fit w-12")}
-          value={amount}
-          onChange={(e) => handleQuanityChange(+e.target.value)}
-        />
-        <button onClick={() => handleQuanityChange(amount + 1)}>
-          <AiOutlinePlus />
-        </button>
-      </section>
-      <p className="col-span-2">{amount * price} zł</p>
-    </article>
+    <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+      <Link href={`/product/${product_id}`}>
+        <img src={imageUrl} alt={name} className="w-full rounded-lg sm:w-40" />
+      </Link>
+      <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+        <div className="mt-5 sm:mt-0">
+          <Link href={`/product/${product_id}`}>
+            <h2 className="text-lg font-bold text-gray-900">{name}</h2>
+          </Link>
+          {/* TODO category name */}
+          {/* <p className="mt-1 text-xs text-gray-700">36EU - 4US</p> */}
+        </div>
+        <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+          <div className="flex items-center border-gray-100">
+            <span
+              className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
+              onClick={() => handleQuanityChange(amount - 1)}
+            >
+              {" "}
+              -{" "}
+            </span>
+            <input
+              className="h-8 w-8 border bg-white text-center text-xs outline-none"
+              type="number"
+              min="1"
+              value={amount}
+              onChange={(e) => handleQuanityChange(+e.target.value)}
+            />
+            <span
+              className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
+              onClick={() => handleQuanityChange(amount + 1)}
+            >
+              {" "}
+              +{" "}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <p className="text-sm">{amount * price} PLN</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
