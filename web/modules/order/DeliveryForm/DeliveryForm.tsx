@@ -1,34 +1,30 @@
 "use client";
-import { CustomFormControl } from "@modules/common";
+import { Card } from "@modules/common";
 import { FC } from "react";
-import { useForm } from "react-hook-form";
-
-type Inputs = {
-  delivery: "dpd" | "inpost";
-};
 
 type DeliveryFormProps = {};
 
 export const DeliveryForm: FC<DeliveryFormProps> = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
-
-  const onSubmit = (data: Inputs) => console.debug(data);
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <CustomFormControl>
-        <>
-          <h3 className="text-2xl mb-4">Sposób dostawy</h3>
-          <div>
-            <input type="radio" {...register("delivery")} value="dpd" />
-            <span className="ml-4">Kurier DPD</span>
+    <Card>
+      <>
+        <p className="text-lg font-bold">Dostawa</p>
+        <hr className="my-4" />
+        <div className="mb-2 flex justify-between">
+          <div className="flex">
+            <input type="radio" value="dpd" />
+            <p className="text-gray-700 ml-2">Kurier DPD</p>
           </div>
-          <div className="mt-2">
-            <input type="radio" {...register("delivery")} value="inpost" />
-            <span className="ml-4">Kurier InPost</span>
+          <p className="text-gray-700">16.99 PLN</p>
+        </div>
+        <div className="mb-2 flex justify-between">
+          <div className="flex">
+            <input type="radio" value="inpost" />
+            <p className="text-gray-700 ml-2">Kurier InPost</p>
           </div>
-        </>
-      </CustomFormControl>
-    </form>
+          <p className="text-gray-700">18.99 PLN</p>
+        </div>
+      </>
+    </Card>
   );
 };

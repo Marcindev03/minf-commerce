@@ -2,10 +2,12 @@
 import { Product } from "@modules/api/types";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
+import { removeCartItem } from "../helpers";
 
 type CartItemProps = {
   product: Product;
   onQuanityChange?: (name: string, sum: number) => void;
+  onProductDelete?: () => void;
 };
 
 export const CartItem: FC<CartItemProps> = ({
@@ -16,6 +18,7 @@ export const CartItem: FC<CartItemProps> = ({
     images: [imageUrl],
   },
   onQuanityChange,
+  onProductDelete,
 }) => {
   const [amount, setAmount] = useState(1);
 
@@ -29,6 +32,11 @@ export const CartItem: FC<CartItemProps> = ({
 
     setAmount(valueToSet);
     onQuanityChange?.(name, valueToSet * price);
+  };
+
+  const handleProductDelete = () => {
+    removeCartItem(product_id);
+    onProductDelete?.();
   };
 
   return (
@@ -68,7 +76,10 @@ export const CartItem: FC<CartItemProps> = ({
               +{" "}
             </span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div
+            className="flex items-center space-x-4"
+            onClick={handleProductDelete}
+          >
             <p className="text-sm">{amount * price} PLN</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"

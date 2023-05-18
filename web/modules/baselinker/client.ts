@@ -14,7 +14,7 @@ export const baselinkerClient = async <T>(
     method: "POST",
     headers,
     body: new URLSearchParams({ method, parameters: JSON.stringify(params) }),
-    cache: "no-store",
+    cache: "force-cache",
   });
   const data = await res.json();
 
