@@ -16,7 +16,7 @@ const transformProducts = (products: { [key: string]: ProductData }) =>
   }));
 
 type GetProductsParams = {
-  categoryName?: string;
+  category?: string;
   limit?: number;
   ids?: number[];
 };
@@ -27,10 +27,10 @@ export const getProducts = async (params?: GetProductsParams) => {
     unknown
   >();
 
-  if (params?.categoryName) {
+  if (params?.category) {
     getBaselinkerProducsParams.set(
       "categoryId",
-      await getCategoryIdByName(params.categoryName)
+      await getCategoryIdByName(params.category)
     );
   }
 
