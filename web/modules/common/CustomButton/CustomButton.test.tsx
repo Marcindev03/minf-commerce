@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import { CustomButton } from "./CustomButton";
 
 describe("Custom button", () => {
@@ -43,5 +44,19 @@ describe("Custom button", () => {
 
     expect(button).toBeDisabled();
     expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  test("should match snapshot", () => {
+    const buttonText = "Click me!";
+    const handleClick = jest.fn();
+    const tree = renderer
+      .create(
+        <CustomButton disabled onClick={handleClick}>
+          {buttonText}
+        </CustomButton>
+      )
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
   });
 });
