@@ -11,7 +11,9 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
   const queryClient = useMemo(
     () =>
       new QueryClient({
-        defaultOptions: { queries: { refetchOnMount: false } },
+        defaultOptions: {
+          queries: { refetchOnMount: false, refetchOnWindowFocus: false },
+        },
       }),
     []
   );
