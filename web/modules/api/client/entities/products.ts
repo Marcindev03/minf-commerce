@@ -45,3 +45,13 @@ export const useProductQuery = (productId: string) =>
     queryKey: [useProductQueryKey, productId],
     queryFn: () => fetchProduct(productId),
   });
+
+export const useCartProductsQueryKey = "cartProducts";
+export const useCartProductsQuery = (productsIds: string[]) => {
+  const ids = productsIds.length ? productsIds.join(",") : "";
+  return useQuery({
+    queryKey: [useCartProductsQuery, ids],
+    queryFn: () => fetchProducts("", ids),
+    enabled: false,
+  });
+};

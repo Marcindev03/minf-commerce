@@ -1,5 +1,5 @@
 "use client";
-import { useProductsQuery } from "@modules/api/client";
+import { useCartProductsQuery, useProductsQuery } from "@modules/api/client";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { CartItem } from "../CartItem";
 import { getCartItems } from "../helpers";
@@ -13,14 +13,16 @@ export const CartList: FC<CartListProps> = () => {
   const [cart, setProductIds] = useState<string[]>([]);
   const [productsSums, setProductsSums] = useState(new Map<string, number>());
 
-  const { data, refetch } = useProductsQuery("", cart);
+  const { data, refetch } = useCartProductsQuery(cart);
 
   useEffect(() => {
     getCart();
   }, []);
 
   useEffect(() => {
-    refetch();
+    if (cart.length) {
+      refetch();
+    }
   }, [cart]);
 
   const getCart = useCallback(() => setProductIds(getCartItems()), []);
@@ -47,7 +49,7 @@ export const CartList: FC<CartListProps> = () => {
               onQuanityChange={handleQuanityChange}
               onProductDelete={handleProductDelete}
             />
-          ))}
+          )) ?? <p className="text-xl text-center mt-20">Koszyk jest pusty</p>}
         </div>
         <article>
           <section className="mb-6">
