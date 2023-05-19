@@ -13,7 +13,7 @@ export const GET = async (
     };
   }
 ) => {
-  const productId = params.id;
+  const productId = +params.id;
 
   try {
     const product = await getProduct(productId);

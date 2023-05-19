@@ -6,20 +6,14 @@ import { getProducts } from "@modules/api/server";
 export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url);
 
-  const category = searchParams.get("category");
-  const limit = searchParams.get("limit");
-  const ids =
-    searchParams
-      .get("ids")
-      ?.split(",")
-      .map((id) => +id) ?? [];
+  const params = Array.from(searchParams.entries())
+    .filter(([key, value]) => value && value !== "")
+    .map(([key, value]) => [key, decodeURI(value)]);
+
+  const filters = Object.fromEntries(params);
 
   try {
-    const products = await getProducts({
-      categoryName: category ? decodeURI(category) : undefined,
-      limit: limit ? +limit : undefined,
-      ids,
-    });
+    const products = await getProducts(filters);
 
     return NextResponse.json({ data: products });
   } catch (err) {
