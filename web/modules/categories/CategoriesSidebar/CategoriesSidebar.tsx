@@ -13,13 +13,16 @@ export const CategoriesSidebar: FC<CategoriesSidebarProps> = () => {
 
   return (
     <section>
-      <h3 className="font-bold text-2xl">Kategorie</h3>
-      <ul>
+      <ul className="flex overflow-x-auto sm:justify-center whitespace-nowrap py-8 hide-scrollbar">
         {data?.data.map(({ name }) => (
           <li
-            className={classnames("mt-4 hover:underline", {
-              "text-blue-500": `/products/${name}` === pathname,
-            })}
+            className={classnames(
+              "hover:underline mx-2 border-2 w-fit px-2 border-blue-500 rounded-full text-center lg:text-lg",
+              {
+                "text-white bg-blue-500":
+                  `/products/${name}` === decodeURI(pathname),
+              }
+            )}
             key={name}
           >
             <Link href={`/products/${name}`}>{name}</Link>

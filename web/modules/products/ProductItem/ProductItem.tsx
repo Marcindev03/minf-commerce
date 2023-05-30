@@ -11,7 +11,7 @@ export const ProductItem: FC<ProductItemProps> = ({
   prices,
   images,
 }) => (
-  <article className="max-w-xs rounded-lg shadow-md overflow-hidden">
+  <article className="max-w-[300px] rounded-lg shadow-md overflow-hidden">
     <Link href={`/product/${product_id}`}>
       <Image
         src={images?.[0]}
@@ -21,7 +21,7 @@ export const ProductItem: FC<ProductItemProps> = ({
         className="object-cover h-80"
       />
       <section className="flex flex-col items-center p-4">
-        <p>{name}</p>
+        <p className="text-center">{name}</p>
         <p>{prices?.[0]} PLN</p>
       </section>
     </Link>
