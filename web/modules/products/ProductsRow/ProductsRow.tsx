@@ -11,9 +11,11 @@ export const ProductsRow: FC<ProductsRowProps> = ({ category }) => {
   const { data } = useProductsQuery(category, [], 4);
 
   return (
-    <section className="grid grid-cols-4 gap-12">
+    <section className="flex flex-wrap justify-center xl:justify-between">
       {data?.data.map((product) => (
-        <ProductItem key={product.product_id} {...product} />
+        <div className="mb-6 mx-3 xl:mx-0">
+          <ProductItem key={product.product_id} {...product} />
+        </div>
       ))}
     </section>
   );

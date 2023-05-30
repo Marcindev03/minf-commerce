@@ -1,11 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Custom button should match snapshot 1`] = `
-<button
-  className="bg-blue-500 py-3 px-5 text-white rounded hover:bg-blue-800"
-  disabled={true}
-  onClick={[MockFunction]}
+<a
+  href="/products"
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+  onTouchStart={[Function]}
 >
-  Click me!
-</button>
+  <button
+    className="bg-blue-500 py-3 px-5 text-white rounded hover:bg-blue-800 py-10"
+    disabled={true}
+    onClick={[MockFunction]}
+  >
+    Click me!
+  </button>
+</a>
 `;

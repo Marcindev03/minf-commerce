@@ -1,20 +1,25 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { FC } from "react";
 import classNames from "classnames";
 import { useActiveNavbarItem } from "@modules/hooks";
 
-type NavbarItemProps = {
-  children: string;
+type MobileSidebarItemProps = {
   href: string;
+  onClick?: () => void;
+  children: string;
 };
 
-export const NavbarItem: FC<NavbarItemProps> = ({ children, href }) => {
+export const MobileSidebarItem: FC<MobileSidebarItemProps> = ({
+  href,
+  onClick,
+  children,
+}) => {
   const isActive = useActiveNavbarItem(href);
 
   return (
-    <li className="mx-3 text-center">
+    <li className="mb-6 text-xl font-semibold">
       <Link
+        onClick={onClick}
         href={href}
         className={classNames("hover:text-blue-500", {
           "text-blue-500": isActive,
