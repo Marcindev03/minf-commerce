@@ -1,5 +1,4 @@
 import { getProduct } from "@modules/api/server";
-import { prisma } from "@modules/databse";
 import { DatabaseErrorResponse, NotFoundErrorResponse } from "@modules/server";
 import { NextResponse } from "next/server";
 
@@ -25,7 +24,5 @@ export const GET = async (
     return NextResponse.json({ data: product });
   } catch (err) {
     return new DatabaseErrorResponse();
-  } finally {
-    prisma.$disconnect();
   }
 };
