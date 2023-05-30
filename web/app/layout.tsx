@@ -11,7 +11,6 @@ import {
   useProductsQueryKey,
 } from "@modules/api/client";
 import { Category } from "@modules/api/types";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,13 +34,13 @@ export default async function RootLayout({
   };
 
   await Promise.all([
-    ...categories.data.map(
+    ...(categories?.data?.map(
       async ({ name }) =>
         await queryClient.prefetchQuery({
           queryKey: [useProductsQueryKey, name, "", 4],
           queryFn: () => fetchProducts(name, "", 4),
         })
-    ),
+    ) ?? []),
     queryClient.prefetchQuery({
       queryKey: [useProductsQueryKey, "", "", 4],
       queryFn: () => fetchProducts("", "", 4),
