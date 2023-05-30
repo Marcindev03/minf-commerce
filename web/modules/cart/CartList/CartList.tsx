@@ -1,5 +1,5 @@
 "use client";
-import { useCartProductsQuery, useProductsQuery } from "@modules/api/client";
+import { useCartProductsQuery } from "@modules/api/client";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { CartItem } from "../CartItem";
 import { getCartItems } from "../helpers";
