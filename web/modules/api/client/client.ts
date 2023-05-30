@@ -4,6 +4,8 @@ import { cache } from "react";
 export const getQueryClient = cache(() => new QueryClient());
 
 export const restClient = async (url: string) => {
+  console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
+
   const baseUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api`;
   const finalUrl = baseUrl + url;
 
