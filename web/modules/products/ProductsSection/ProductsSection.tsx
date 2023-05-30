@@ -11,9 +11,9 @@ export const ProductsSection: FC<ProductsSectionProps> = ({
   category,
 }) => {
   return (
-    <section className="my-8">
-      <h3 className="text-3xl font-bold">{title}</h3>
-      <hr className="mt-4 mb-6" />
+    <section className="">
+      <h3 className="text-3xl font-bold my-8 text-center">{title}</h3>
+      <hr className="mb-8" />
       <ProductsRow category={category} />
     </section>
   );

@@ -13,7 +13,7 @@ const HomePage = () => {
         src={homepageImage}
         alt="homepage image"
         width={1280}
-        className="max-h-96 object-cover mb-12"
+        className="max-h-96 object-cover"
       />
 
       <ProductsSection title="Najnowsze produkty" />

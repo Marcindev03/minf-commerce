@@ -61,7 +61,6 @@ export default async function RootLayout({
             </ContentContainer>
             <Footer />
           </Hydrate>
-          <ReactQueryDevtools initialIsOpen />
         </Providers>
       </body>
     </html>

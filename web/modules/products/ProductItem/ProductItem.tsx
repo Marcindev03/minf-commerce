@@ -11,12 +11,12 @@ export const ProductItem: FC<ProductItemProps> = ({
   prices,
   images,
 }) => (
-  <article className="rounded-lg shadow-md overflow-hidden">
+  <article className="max-w-xs rounded-lg shadow-md overflow-hidden">
     <Link href={`/product/${product_id}`}>
       <Image
         src={images?.[0]}
         alt={name}
-        width={320}
+        width={300}
         height={100}
         className="object-cover h-80"
       />
