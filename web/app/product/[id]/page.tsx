@@ -1,8 +1,9 @@
 "use client";
 import { useProductQuery } from "@modules/api/client";
-import { FC } from "react";
-import { CustomNextImage } from "@modules/common";
+import { FC, useCallback } from "react";
+import { CustomButton, CustomNextImage } from "@modules/common";
 import { addItemToCart } from "@modules/cart";
+import { ToastContainer, toast } from "react-toastify";
 
 type ProductPageProps = {
   params: {
@@ -15,7 +16,10 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
 
   const product = data?.data;
 
-  const handleAddToCart = () => addItemToCart(id);
+  const handleAddToCart = useCallback(() => {
+    addItemToCart(id);
+    toast.success("Dodano do koszyka");
+  }, []);
 
   return (
     <section className="grid grid-cols-10 gap-8">
@@ -24,18 +28,15 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
       </article>
       <article className="col-span-6 flex flex-col justify-around">
         <section>
-          <h2 className="text-xl">{product?.text_fields.name}</h2>
-          <hr />
+          <h2 className="text-3xl">{product?.text_fields.name}</h2>
+          <hr className="mt-4" />
         </section>
-        <p className="text-2xl py-4">Cena: {product?.prices?.[0]} zł</p>
+        <p className="text-xl py-4">Cena: {product?.prices?.[0]} zł</p>
         <section className="flex w-full justify-between">
           <p>Dostępna ilość: {product?.quantity}</p>
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded"
-            onClick={handleAddToCart}
-          >
+          <CustomButton onClick={handleAddToCart}>
             Dodaj do koszyka
-          </button>
+          </CustomButton>
         </section>
       </article>
       <article className="col-span-10">
@@ -43,6 +44,7 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
         <hr className="py-2" />
         <p>{product?.text_fields.description}</p>
       </article>
+      <ToastContainer position="bottom-center" autoClose={1800} />
     </section>
   );
 };

@@ -13,6 +13,8 @@ import {
 import { Category } from "@modules/api/types";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
+import "react-toastify/dist/ReactToastify.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
