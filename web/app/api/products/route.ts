@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@modules/databse";
 import { DatabaseErrorResponse } from "@modules/server";
 import { getProducts } from "@modules/api/server";
 
@@ -19,7 +18,5 @@ export const GET = async (req: Request) => {
   } catch (err) {
     console.log(err);
     return new DatabaseErrorResponse();
-  } finally {
-    prisma.$disconnect();
   }
 };

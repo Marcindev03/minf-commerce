@@ -8,11 +8,9 @@
     "start": "next start -p 4000",
     "lint": "next lint",
     "test": "jest --watch",
-    "test:ci": "jest --ci",
-    "seed_all": "node ./prisma/seed/setup.js"
+    "test:ci": "jest --ci"
   },
   "dependencies": {
-    "@prisma/client": "^4.13.0",
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-query-devtools": "^4.29.7",
     "@types/node": "18.16.1",
