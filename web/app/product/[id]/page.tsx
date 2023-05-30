@@ -19,7 +19,7 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
   const handleAddToCart = useCallback(() => {
     addItemToCart(id);
     toast.success("Dodano do koszyka");
-  }, []);
+  }, [id]);
 
   return (
     <section className="grid grid-cols-10 gap-8">
