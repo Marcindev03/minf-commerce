@@ -30,12 +30,12 @@ const ProductsLayout: FC<ProductsLayoutProps> = async ({ children }) => {
         src={productsLayoutImage}
         alt={"Products Layout Image"}
         width={1280}
-        className="max-h-80 object-cover mb-12"
+        className="max-h-80 object-cover"
         priority
         loading="eager"
       />
       <Hydrate state={dehydratedState}>
-        <article className="grid grid-cols-4">
+        <article>
           <CategoriesSidebar />
           {children}
         </article>
