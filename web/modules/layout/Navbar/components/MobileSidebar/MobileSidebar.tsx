@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineShoppingCart, HiOutlineXMark } from "react-icons/hi2";
 import { MobileSidebarItem } from "../MobileSidebarItem";
 
 type MobileSidebarItem = {
@@ -40,7 +40,9 @@ export const MobileSidebar: FC<MobileSidebarProps> = ({
             Kontakt
           </MobileSidebarItem>
           <MobileSidebarItem onClick={onClose} href={`/cart`}>
-            Koszyk
+            <span className="flex items-center">
+              <HiOutlineShoppingCart /> <span className="ml-2">Koszyk</span>
+            </span>
           </MobileSidebarItem>
         </ul>
       </section>

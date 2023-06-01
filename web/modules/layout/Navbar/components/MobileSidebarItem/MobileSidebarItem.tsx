@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import classNames from "classnames";
 import { useActiveNavbarItem } from "@modules/hooks";
 
 type MobileSidebarItemProps = {
   href: string;
   onClick?: () => void;
-  children: string;
+  children: ReactNode;
 };
 
 export const MobileSidebarItem: FC<MobileSidebarItemProps> = ({
