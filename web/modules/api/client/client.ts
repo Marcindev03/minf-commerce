@@ -1,12 +1,16 @@
+import { isDev, isServer } from "@modules/helpers";
 import { QueryClient } from "@tanstack/react-query";
 import { cache } from "react";
 
 export const getQueryClient = cache(() => new QueryClient());
 
 export const restClient = async (url: string) => {
-  console.log(process.env.NEXT_PUBLIC_VERCEL_URL);
+  const baseUrl = isDev
+    ? "http://localhost:4000/api"
+    : isServer
+    ? `${process.env.VERCEL_URL}/api`
+    : "/api";
 
-  const baseUrl = "/api";
   const finalUrl = baseUrl + url;
 
   const res = await fetch(finalUrl);
