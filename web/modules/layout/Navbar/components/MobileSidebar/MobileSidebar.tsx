@@ -19,7 +19,7 @@ export const MobileSidebar: FC<MobileSidebarProps> = ({
 }) => {
   if (isOpen) {
     return (
-      <section className="fixed top-0 left-0 w-screen h-screen bg-white ease">
+      <section className="fixed top-0 left-0 w-screen h-screen bg-white ease z-20">
         <button className="fixed top-4 right-4" onClick={onClose}>
           <HiOutlineXMark size="2rem" />
         </button>

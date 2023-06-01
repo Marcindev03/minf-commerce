@@ -13,7 +13,7 @@ export const ProductsRow: FC<ProductsRowProps> = ({ category }) => {
   return (
     <section className="flex flex-wrap justify-center xl:justify-between">
       {data?.data.map((product) => (
-        <div className="mb-6 mx-3 xl:mx-0">
+        <div key={product.product_id} className="mb-6 mx-3 xl:mx-0">
           <ProductItem key={product.product_id} {...product} />
         </div>
       ))}

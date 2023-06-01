@@ -1,9 +1,10 @@
 "use client";
 import { useProductQuery } from "@modules/api/client";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { CustomButton, CustomNextImage } from "@modules/common";
 import { addItemToCart } from "@modules/cart";
 import { ToastContainer, toast } from "react-toastify";
+import classNames from "classnames";
 
 type ProductPageProps = {
   params: {
@@ -12,7 +13,11 @@ type ProductPageProps = {
 };
 
 const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
+  const pageRef = useRef<HTMLElement>(null);
+
   const { data } = useProductQuery(id);
+
+  const [isAddToCartButtomFixed, setIsAddToCartButtomFixed] = useState(true);
 
   const product = data?.data;
 
@@ -21,29 +26,76 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
     toast.success("Dodano do koszyka");
   }, [id]);
 
+  useEffect(() => {
+    const handleWindowScroll = () => {
+      const pageBottom = pageRef?.current?.getBoundingClientRect()
+        .bottom as number;
+
+      if (window.innerWidth > 1024) {
+        setIsAddToCartButtomFixed(false);
+        return;
+      }
+
+      if (pageBottom >= window.innerHeight) {
+        setIsAddToCartButtomFixed(true);
+      } else {
+        setIsAddToCartButtomFixed(false);
+      }
+    };
+
+    handleWindowScroll();
+
+    window.addEventListener("scroll", handleWindowScroll);
+    window.addEventListener("resize", handleWindowScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleWindowScroll);
+      window.removeEventListener("resize", handleWindowScroll);
+    };
+  }, []);
+
   return (
-    <section className="grid grid-cols-10 gap-8">
-      <article className="col-span-4 flex justify-center items-center relative h-96">
-        <CustomNextImage src={product?.images?.[0] ?? ""} alt={""} fill />
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <section className="lg:col-span-2">
+        <h2 className="text-3xl text-center">{product?.text_fields.name}</h2>
+        <hr className="my-4" />
+      </section>
+      <article className="flex justify-center lg:justify-normal">
+        <CustomNextImage
+          src={product?.images?.[0] ?? ""}
+          alt={""}
+          width={600}
+          height={100}
+        />
       </article>
-      <article className="col-span-6 flex flex-col justify-around">
-        <section>
-          <h2 className="text-3xl">{product?.text_fields.name}</h2>
-          <hr className="mt-4" />
-        </section>
-        <p className="text-xl py-4">Cena: {product?.prices?.[0]} zł</p>
-        <section className="flex w-full justify-between">
-          <p>Dostępna ilość: {product?.quantity}</p>
-          <CustomButton onClick={handleAddToCart}>
+      <article className="px-4">
+        <p className="text-xl">Cena: {product?.prices?.[0]} zł</p>
+        <p className="my-2">Dostępna ilość: {product?.quantity}</p>
+        <hr className="my-3" />
+        <CustomButton className="hidden lg:block" onClick={handleAddToCart}>
+          Dodaj do koszyka
+        </CustomButton>
+      </article>
+
+      <article
+        className="px-4 pb-[74px] relative rounded-sm xl:px-0 lg:col-span-2 break-words"
+        ref={pageRef}
+      >
+        <h2 className="text-3xl">Opis</h2>
+        <hr className="my-4" />
+        <p className="text-justify">{product?.text_fields.description}</p>
+        <article
+          className={classNames("right-0 bottom-0 w-fit p-4", {
+            fixed: isAddToCartButtomFixed,
+            absolute: !isAddToCartButtomFixed,
+          })}
+        >
+          <CustomButton className="lg:hidden" onClick={handleAddToCart}>
             Dodaj do koszyka
           </CustomButton>
-        </section>
+        </article>
       </article>
-      <article className="col-span-10">
-        <h2 className="text-xl">Opis</h2>
-        <hr className="py-2" />
-        <p>{product?.text_fields.description}</p>
-      </article>
+
       <ToastContainer position="bottom-center" autoClose={1800} />
     </section>
   );
