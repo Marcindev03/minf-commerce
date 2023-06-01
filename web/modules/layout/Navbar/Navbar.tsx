@@ -56,7 +56,11 @@ export const Navbar: FC<NavbarProps> = () => {
             <CustomButton href="/contact" className="hidden lg:block mr-2">
               Kontakt
             </CustomButton>
-            <CustomButton href="/cart" variant="outline">
+            <CustomButton
+              href="/cart"
+              variant="outline"
+              className="hidden lg:block"
+            >
               <span className="flex items-center">
                 <HiOutlineShoppingCart /> <span className="ml-2">Koszyk</span>
               </span>
