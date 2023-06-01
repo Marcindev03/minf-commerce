@@ -8,7 +8,7 @@ export const restClient = async (url: string) => {
   const baseUrl = isDev
     ? "http://localhost:4000/api"
     : isServer
-    ? `${process.env.VERCEL_URL}/api`
+    ? `https://${process.env.VERCEL_URL}/api`
     : "/api";
 
   const finalUrl = baseUrl + url;
