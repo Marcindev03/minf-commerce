@@ -5,6 +5,11 @@ import { CustomButton } from "./CustomButton";
 const buttonText = "Click me!";
 const href = "/products";
 const className = "py-10";
+const buttonPrimaryStyles =
+  "text-white border-blue-500 bg-blue-500 hover:bg-blue-800 hover:border-blue-800";
+
+const buttonOutlineStyles =
+  "text-black bg-white border-blue-400 hover:bg-blue-400 hover:text-white";
 
 describe("Custom button", () => {
   test("should render children", () => {
@@ -66,6 +71,20 @@ describe("Custom button", () => {
 
     const button = screen.getByRole("button");
     expect(button.className.split(" ")).toContain(className);
+  });
+
+  test("should apply primary styles defaulty", () => {
+    render(<CustomButton>{buttonText}</CustomButton>);
+
+    const button = screen.getByRole("button");
+    expect(button.className.includes(buttonPrimaryStyles)).toBeTruthy();
+  });
+
+  test("should apply outline styles when variant is outline", () => {
+    render(<CustomButton variant="outline">{buttonText}</CustomButton>);
+
+    const button = screen.getByRole("button");
+    expect(button.className.includes(buttonOutlineStyles)).toBeTruthy();
   });
 
   test("should match snapshot", () => {

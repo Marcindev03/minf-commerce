@@ -6,7 +6,7 @@ import { logoSvgColorTransparent } from "@modules/assets";
 import Link from "next/link";
 import { useCategoriesQuery } from "@modules/api/client";
 import { NavbarItem } from "./components";
-import { HiBars3 } from "react-icons/hi2";
+import { HiBars3, HiOutlineShoppingCart } from "react-icons/hi2";
 import { MobileSidebar } from "./components/MobileSidebar";
 import { useDisclosure } from "@modules/hooks";
 import { CustomButton } from "@modules/common";
@@ -52,9 +52,16 @@ export const Navbar: FC<NavbarProps> = () => {
               ))}
             </ul>
           </section>
-          <CustomButton href="/contact" className="hidden lg:block">
-            Kontakt
-          </CustomButton>
+          <section className="flex">
+            <CustomButton href="/contact" className="hidden lg:block mr-2">
+              Kontakt
+            </CustomButton>
+            <CustomButton href="/cart" variant="outline">
+              <span className="flex items-center">
+                <HiOutlineShoppingCart /> <span className="ml-2">Koszyk</span>
+              </span>
+            </CustomButton>
+          </section>
         </article>
       </ContentContainer>
       <MobileSidebar items={navItems} isOpen={isOpen} onClose={onClose} />
