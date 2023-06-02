@@ -28,7 +28,7 @@ export const OrderForm: FC<OrderFormProps> = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full shadow-md rounded p-6 mx-auto"
+      className="w-full md:shadow-lg rounded p-6 mx-auto"
     >
       <CustomFormControl error={errors.firstName} isRequired labelTitle="Imię">
         <input
