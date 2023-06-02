@@ -4,7 +4,13 @@ import { cache } from "react";
 
 export const getQueryClient = cache(() => new QueryClient());
 
-export const restClient = async (url: string) => {
+type HTTP_METHOD = "GET" | "POST";
+
+export const restClient = async (
+  url: string,
+  method?: HTTP_METHOD,
+  body?: BodyInit
+) => {
   const baseUrl = isDev
     ? "http://localhost:4000/api"
     : isServer
@@ -13,7 +19,10 @@ export const restClient = async (url: string) => {
 
   const finalUrl = baseUrl + url;
 
-  const res = await fetch(finalUrl);
+  const res = await fetch(finalUrl, {
+    method: method ?? "GET",
+    body,
+  });
   const data = await res.json();
 
   return data;

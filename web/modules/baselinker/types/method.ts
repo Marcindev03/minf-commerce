@@ -2,4 +2,6 @@ export type Method =
   | "getInventoryProductsList"
   | "getInventories"
   | "getInventoryProductsData"
-  | "getInventoryCategories";
+  | "getInventoryCategories"
+  | "addOrder"
+  | "getOrderStatusList";
