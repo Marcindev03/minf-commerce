@@ -7,7 +7,14 @@ export const GET = async (req: Request) => {
 
   const params = Array.from(searchParams.entries())
     .filter(([key, value]) => value && value !== "")
-    .map(([key, value]) => [key, decodeURI(value)]);
+    .map(([key, value]) => {
+      if (key === "ids") {
+        const arrValue = value.split(",");
+        return [key, arrValue];
+      }
+
+      return [key, decodeURI(value)];
+    });
 
   const filters = Object.fromEntries(params);
 

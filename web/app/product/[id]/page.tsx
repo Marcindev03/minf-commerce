@@ -2,9 +2,9 @@
 import { useProductQuery } from "@modules/api/client";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { CustomButton, CustomNextImage } from "@modules/common";
-import { addItemToCart } from "@modules/cart";
 import { ToastContainer, toast } from "react-toastify";
 import classNames from "classnames";
+import { useCartContext } from "@modules/cart";
 
 type ProductPageProps = {
   params: {
@@ -15,6 +15,8 @@ type ProductPageProps = {
 const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
   const pageRef = useRef<HTMLElement>(null);
 
+  const { addToCart } = useCartContext();
+
   const { data } = useProductQuery(id);
 
   const [isAddToCartButtomFixed, setIsAddToCartButtomFixed] = useState(true);
@@ -22,9 +24,9 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
   const product = data?.data;
 
   const handleAddToCart = useCallback(() => {
-    addItemToCart(id);
+    addToCart({ productId: product?.product_id ?? "", quantity: 1 });
     toast.success("Dodano do koszyka");
-  }, [id]);
+  }, [addToCart, product?.product_id]);
 
   useEffect(() => {
     const handleWindowScroll = () => {
