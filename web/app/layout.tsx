@@ -38,12 +38,12 @@ export default async function RootLayout({
       async ({ name }) =>
         await queryClient.prefetchQuery({
           queryKey: [useProductsQueryKey, name, "", 4],
-          queryFn: () => fetchProducts(name, "", 4),
+          queryFn: () => fetchProducts(name, [], 4),
         })
     ) ?? []),
     queryClient.prefetchQuery({
       queryKey: [useProductsQueryKey, "", "", 4],
-      queryFn: () => fetchProducts("", "", 4),
+      queryFn: () => fetchProducts("", [], 4),
     }),
   ]);
 

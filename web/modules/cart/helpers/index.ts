@@ -1,31 +1,32 @@
-export const addItemToCart = (productId: string) => {
+import { CartItem } from "../types";
+
+export const removeCartItem = (id: string) =>
+  saveCart((cart) => {
+    cart.delete(id);
+    return cart;
+  });
+
+export const setCartItem = (item: CartItem) =>
+  saveCart((cart) => {
+    cart.set(item.productId, item);
+    return cart;
+  });
+
+const saveCart = (
+  callback: (
+    cart: ReturnType<typeof getCartItems>
+  ) => ReturnType<typeof getCartItems>
+) => {
   const cart = getCartItems();
-
-  if (cart.includes(productId)) {
-    return;
-  }
-
-  cart.push(productId);
-
-  saveCartInLocalStorage(cart);
+  const updatedCart = callback(cart);
+  global?.window?.localStorage.setItem(
+    "cart",
+    JSON.stringify(Array.from(updatedCart.entries()))
+  );
 };
 
-export const removeCartItem = (productId: string) => {
-  const cart = getCartItems();
+export const getCartItems = (): Map<string, CartItem> => {
+  const jsonCart = global?.window?.localStorage.getItem("cart");
 
-  const productIndex = cart.findIndex((id) => productId === id);
-  cart.splice(productIndex, 1);
-
-  saveCartInLocalStorage(cart);
-};
-
-const saveCartInLocalStorage = (cart: string[]) =>
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-export const getCartItems = () => {
-  const cartJson = localStorage.getItem("cart");
-
-  const cart = (cartJson ? JSON.parse(cartJson) : []) as string[];
-
-  return cart;
+  return jsonCart ? new Map(JSON.parse(jsonCart)) : new Map();
 };

@@ -1,15 +1,13 @@
 "use client";
 import { Product } from "@modules/api/types";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
-import { removeCartItem } from "../helpers";
+import { ChangeEvent, FC, useMemo } from "react";
 import { Card, CustomNextImage } from "@modules/common";
 import { HiOutlineTrash } from "react-icons/hi2";
+import { useCartContext } from "../CartContext";
 
 type CartItemProps = {
   product: Product;
-  onQuanityChange?: (name: string, sum: number) => void;
-  onProductDelete?: () => void;
 };
 
 export const CartItem: FC<CartItemProps> = ({
@@ -19,27 +17,25 @@ export const CartItem: FC<CartItemProps> = ({
     prices: [price],
     images: [imageUrl],
   },
-  onQuanityChange,
-  onProductDelete,
 }) => {
-  const [amount, setAmount] = useState(1);
+  const { cart, changeProductQuantity, removeFromCart } = useCartContext();
 
-  // TODO remove useEffect
-  useEffect(() => {
-    onQuanityChange?.(name, price);
-  }, []);
+  const handleQuantityDecrease = () =>
+    changeProductQuantity({
+      productId: product_id,
+      quantity: quantity <= 1 ? 1 : quantity - 1,
+    });
+  const handleQuantityIncrease = () =>
+    changeProductQuantity({ productId: product_id, quantity: quantity + 1 });
+  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) =>
+    changeProductQuantity({ productId: product_id, quantity: +e.target.value });
 
-  const handleQuanityChange = (value: number) => {
-    const valueToSet = value > 0 ? value : amount;
+  const handleProductDelete = () => removeFromCart(product_id);
 
-    setAmount(valueToSet);
-    onQuanityChange?.(name, valueToSet * price);
-  };
-
-  const handleProductDelete = () => {
-    removeCartItem(product_id);
-    onProductDelete?.();
-  };
+  const quantity = useMemo(
+    () => cart.get(product_id)?.quantity ?? 1,
+    [cart.get(product_id)]
+  );
 
   return (
     <Card className="relative mb-6 md:flex">
@@ -56,12 +52,12 @@ export const CartItem: FC<CartItemProps> = ({
         </div>
         <div className="mt-4 flex justify-between">
           <div className="flex items-center space-x-4">
-            <p className="text-sm">{(amount * price).toFixed(2)} PLN</p>
+            <p className="text-sm">{(quantity * price).toFixed(2)} PLN</p>
           </div>
           <div className="flex items-center border-gray-100">
             <span
               className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
-              onClick={() => handleQuanityChange(amount - 1)}
+              onClick={handleQuantityDecrease}
             >
               {" "}
               -{" "}
@@ -70,12 +66,12 @@ export const CartItem: FC<CartItemProps> = ({
               className="h-8 w-8 border bg-white text-center text-xs outline-none"
               type="number"
               min="1"
-              value={amount}
-              onChange={(e) => handleQuanityChange(+e.target.value)}
+              value={quantity}
+              onChange={handleQuantityChange}
             />
             <span
               className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
-              onClick={() => handleQuanityChange(amount + 1)}
+              onClick={handleQuantityIncrease}
             >
               {" "}
               +{" "}

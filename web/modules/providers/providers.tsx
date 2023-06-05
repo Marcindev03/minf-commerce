@@ -1,5 +1,6 @@
 "use client";
 
+import { CartContextProvider } from "@modules/cart";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { FC, ReactNode, useMemo } from "react";
@@ -21,7 +22,7 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <CartContextProvider>{children}</CartContextProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

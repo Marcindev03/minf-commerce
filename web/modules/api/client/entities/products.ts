@@ -5,7 +5,7 @@ import { restClient } from "..";
 
 export const fetchProducts = async (
   categoryName?: string,
-  productsIds?: string,
+  productsIds?: string[],
   limit?: number | null
 ): Promise<{ data: Product[] }> => {
   const query = qs.stringify(
@@ -26,12 +26,16 @@ export const useProductsQuery = (
   productsIds: string[] = [],
   limit?: number
 ) => {
-  const ids = productsIds.length ? productsIds.join(",") : "";
   const productsLimit = limit ?? null;
 
   return useQuery({
-    queryKey: [useProductsQueryKey, category, ids, productsLimit],
-    queryFn: () => fetchProducts(category, ids, productsLimit),
+    queryKey: [
+      useProductsQueryKey,
+      category,
+      productsIds.toString(),
+      productsLimit,
+    ],
+    queryFn: () => fetchProducts(category, productsIds, productsLimit),
   });
 };
 
@@ -47,11 +51,9 @@ export const useProductQuery = (productId: string) =>
   });
 
 export const useCartProductsQueryKey = "cartProducts";
-export const useCartProductsQuery = (productsIds: string[]) => {
-  const ids = productsIds.length ? productsIds.join(",") : "";
-  return useQuery({
-    queryKey: [useCartProductsQuery, ids],
-    queryFn: () => fetchProducts("", ids),
+export const useCartProductsQuery = (productsIds: string[]) =>
+  useQuery({
+    queryKey: [useCartProductsQuery, productsIds],
+    queryFn: () => fetchProducts("", productsIds),
     enabled: false,
   });
-};
