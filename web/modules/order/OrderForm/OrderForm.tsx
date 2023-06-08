@@ -1,6 +1,7 @@
 "use client";
 import { useCreateOrderMutation } from "@modules/api/client";
 import { CustomButton, CustomFormControl } from "@modules/common";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,6 +20,7 @@ type Inputs = {
 type OrderFormProps = {};
 
 export const OrderForm: FC<OrderFormProps> = () => {
+  const router = useRouter();
   const { mutateAsync, isLoading } = useCreateOrderMutation();
   const {
     register,
@@ -28,27 +30,36 @@ export const OrderForm: FC<OrderFormProps> = () => {
 
   const onSubmit = async (data: Inputs) => {
     try {
-      await mutateAsync({
-        phone: data.phoneNumber,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        delivery: {
-          method: "Express Shipping",
-          price: "10.00",
-          company: "ABC Company",
-          address: `${data.street} ${data.houseNumber}`,
-          city: "City",
-          state: "State",
-          postcode: `${data.postalCode}`,
-        },
-        products: [
-          {
-            productId: "86579706",
-            quantity: 2,
+      await mutateAsync(
+        {
+          phone: data.phoneNumber,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          delivery: {
+            method: "Express Shipping",
+            price: "10.00",
+            company: "ABC Company",
+            address: `${data.street} ${data.houseNumber}`,
+            city: "City",
+            state: "State",
+            postcode: `${data.postalCode}`,
           },
-        ],
-      });
+          products: [
+            {
+              productId: "86579706",
+              quantity: 2,
+            },
+          ],
+        },
+        {
+          onSuccess(data, variables, context) {
+            setTimeout(() => {
+              router.push(data.data.paymentUrl);
+            }, 5000);
+          },
+        }
+      );
 
       handlePostOrderSuccess();
     } catch (err) {
