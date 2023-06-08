@@ -1,6 +1,11 @@
-import { Order as BaselinkerOrder, addOrder } from "@modules/baselinker";
+import {
+  Order as BaselinkerOrder,
+  addOrder,
+  setOrderPayment,
+} from "@modules/baselinker";
 import { COUNTRY_CODE } from "@modules/baselinker";
 import { OrderSchemaType } from "./schema";
+import { getOrderIdBySessionId } from "@modules/database";
 
 export const createOrder = async ({
   phone,
@@ -37,4 +42,17 @@ export const createOrder = async ({
   const orderId = await addOrder(addOrderParams);
 
   return orderId;
+};
+
+export const confirmOrderPayment = async (
+  sessionId: string,
+  payment: {
+    amount: number;
+    date: Date;
+    comment: string;
+  }
+) => {
+  const orderId = await getOrderIdBySessionId(sessionId);
+
+  return await setOrderPayment(orderId.toString(), payment);
 };

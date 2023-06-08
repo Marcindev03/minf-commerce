@@ -39,3 +39,21 @@ export const addOrder = async (order: Order) => {
 
   return order_id;
 };
+
+export const setOrderPayment = async (
+  orderId: string,
+  payment: {
+    amount: number;
+    date: Date;
+    comment: string;
+  }
+) => {
+  const paymentParams = {
+    order_id: orderId,
+    payment_done: payment.amount,
+    payment_date: payment.date,
+    payment_comment: payment.comment,
+  };
+
+  return await baselinkerClient("setOrderPayment", paymentParams);
+};

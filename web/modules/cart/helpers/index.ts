@@ -28,5 +28,13 @@ const saveCart = (
 export const getCartItems = (): Map<string, CartItem> => {
   const jsonCart = global?.window?.localStorage.getItem("cart");
 
-  return jsonCart ? new Map(JSON.parse(jsonCart)) : new Map();
+  // TODO add cart versioning
+  // Prevent old cart structure to break applications
+  try {
+    const mapCart = jsonCart ? new Map(JSON.parse(jsonCart)) : new Map();
+
+    return mapCart;
+  } catch (err) {
+    return new Map();
+  }
 };

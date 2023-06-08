@@ -1,4 +1,5 @@
 import { isDev, isServer } from "@modules/helpers";
+import { useVercelEnv } from "@modules/vercel";
 import { QueryClient } from "@tanstack/react-query";
 import { cache } from "react";
 
@@ -14,7 +15,7 @@ export const restClient = async (
   const baseUrl = isDev
     ? "http://localhost:4000/api"
     : isServer
-    ? `https://${process.env.VERCEL_URL}/api`
+    ? `${useVercelEnv()}/api`
     : "/api";
 
   const finalUrl = baseUrl + url;
