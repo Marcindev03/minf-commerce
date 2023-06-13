@@ -18,7 +18,8 @@ export const POST = async (req: Request) => {
     const orderId = await createOrder(validatedData);
 
     const { link: paymentUrl, sessionId } = await requestPaymentUrl(
-      validatedData
+      validatedData,
+      orderId
     );
 
     await saveOrderIdAndSessionId(+orderId, sessionId);

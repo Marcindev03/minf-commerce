@@ -11,7 +11,10 @@ import { v4 as uuid } from "uuid";
 import { CartItem, Order } from "../types";
 import { useVercelEnv } from "@modules/vercel";
 
-export const requestPaymentUrl = async (orderData: OrderSchemaType) => {
+export const requestPaymentUrl = async (
+  orderData: OrderSchemaType,
+  orderId: string
+) => {
   const sessionId = uuid();
 
   const {
@@ -38,8 +41,9 @@ export const requestPaymentUrl = async (orderData: OrderSchemaType) => {
     email,
     country: Country.Poland,
     language: Language.PL,
-    // TODO url return and url status
-    urlReturn: useVercelEnv(process.env.APP_URL),
+    urlReturn: `${useVercelEnv(
+      process.env.APP_URL
+    )}/cart/order/success/${orderId}`,
     urlStatus: useVercelEnv(process.env.APP_URL) + "/api/orders/confirm",
     timeLimit: 15,
     encoding: Encoding.UTF8,
