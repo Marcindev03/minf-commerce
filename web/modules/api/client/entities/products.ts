@@ -17,7 +17,13 @@ export const fetchProducts = async (
     true
   );
 
-  return restClient(`/products${query}`);
+  const { data, ok } = await restClient(`/products${query}`);
+
+  if (!ok) {
+    throw new Error("Something went wrong during products fetching");
+  }
+
+  return data;
 };
 
 export const useProductsQueryKey = "products";
@@ -41,7 +47,15 @@ export const useProductsQuery = (
 
 export const fetchProduct = async (
   productId: string
-): Promise<{ data: Product }> => restClient(`/products/${productId}`);
+): Promise<{ data: Product }> => {
+  const { data, ok } = await restClient(`/products/${productId}`);
+
+  if (!ok) {
+    throw new Error("Something went wrong during fetching product");
+  }
+
+  return data;
+};
 
 export const useProductQueryKey = "product";
 export const useProductQuery = (productId: string) =>
