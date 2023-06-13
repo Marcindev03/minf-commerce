@@ -6,7 +6,6 @@ const DeliveryInfoSchema = z.object({
   company: z.string().optional(),
   address: z.string(),
   city: z.string(),
-  state: z.string(),
   postcode: z.string(),
 });
 

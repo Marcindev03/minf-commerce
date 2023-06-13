@@ -12,7 +12,7 @@ export const createOrder = async ({
   email,
   firstName,
   lastName,
-  delivery: { method, price, company, address, city, state, postcode },
+  delivery: { method, price, company, address, city, postcode },
   products,
 }: OrderSchemaType) => {
   const addOrderParams: BaselinkerOrder = {
@@ -24,7 +24,7 @@ export const createOrder = async ({
     delivery_company: company,
     delivery_address: address,
     delivery_city: city,
-    delivery_state: state,
+    delivery_state: "",
     delivery_postcode: postcode,
     delivery_country_code: COUNTRY_CODE,
     products: products.map(

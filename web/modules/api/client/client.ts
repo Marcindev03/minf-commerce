@@ -24,7 +24,8 @@ export const restClient = async (
     method: method ?? "GET",
     body,
   });
+
   const data = await res.json();
 
-  return data;
+  return { data, status: res.status, ok: res.ok };
 };

@@ -13,6 +13,7 @@ type Inputs = {
   houseNumber: string;
   flatNumber?: string;
   postalCode: string;
+  city: string;
   phoneNumber: string;
   email: string;
 };
@@ -41,8 +42,7 @@ export const OrderForm: FC<OrderFormProps> = () => {
             price: "10.00",
             company: "ABC Company",
             address: `${data.street} ${data.houseNumber}`,
-            city: "City",
-            state: "State",
+            city: data.city,
             postcode: `${data.postalCode}`,
           },
           products: [
@@ -143,6 +143,14 @@ export const OrderForm: FC<OrderFormProps> = () => {
                 value: /\d{2}-\d{3}/,
               },
               required: "Kod pocztowy jest wymagany",
+            })}
+          />
+        </CustomFormControl>
+        <CustomFormControl error={errors.city} isRequired labelTitle="Miasto">
+          <input
+            type="text"
+            {...register("city", {
+              required: "Miasto jest wymagane",
             })}
           />
         </CustomFormControl>
