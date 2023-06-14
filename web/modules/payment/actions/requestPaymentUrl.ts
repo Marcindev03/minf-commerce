@@ -32,9 +32,13 @@ export const requestPaymentUrl = async (
     number: 987654321,
   }));
 
+  const cartPrice = 1000;
+  const deliveryPrice = parseFloat(orderData.delivery.price) * 100;
+  const amount = cartPrice + deliveryPrice;
+
   const order: Order = {
     sessionId: sessionId,
-    amount: 1000,
+    amount,
     currency: Currency.PLN,
     // TODO automate description based on cart
     description: "test order",

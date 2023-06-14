@@ -7,21 +7,15 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
 } from "react";
 import { useMap } from "usehooks-ts";
 import { getCartItems, removeCartItem, setCartItem } from "../helpers";
-import { CartContextValue, CartItem } from "../types";
+import { CartContextValue, CartDeliveryMethod, CartItem } from "../types";
 import { useCartProductsQuery } from "@modules/api/client";
+import { EMPTY_CART_CONTEXT, EMPTY_DELIVERY_METHOD } from "@modules/mocks";
 
-const CartContext = createContext<CartContextValue>({
-  cart: new Map(),
-  addToCart: () => {},
-  changeProductQuantity: () => {},
-  removeFromCart: () => {},
-  products: [],
-  orderSum: 0,
-  isLoading: true,
-});
+const CartContext = createContext<CartContextValue>(EMPTY_CART_CONTEXT);
 export const useCartContext = () => useContext(CartContext);
 
 type CartContextProps = {
@@ -29,6 +23,9 @@ type CartContextProps = {
 };
 
 export const CartContextProvider: FC<CartContextProps> = ({ children }) => {
+  const [deliveryMethod, setDeliveryMethod] = useState<CartDeliveryMethod>(
+    EMPTY_DELIVERY_METHOD
+  );
   const [cart, actions] = useMap<string, CartItem>(getCartItems());
 
   const addToCart = (item: CartItem) => {
@@ -71,17 +68,19 @@ export const CartContextProvider: FC<CartContextProps> = ({ children }) => {
           return prices[0] * quantity;
         })
         .reduce((acc, value) => acc + value, 0) ?? 0,
-    [cart]
+    [cart, data]
   );
 
   const cartContextValue: CartContextValue = {
     cart,
     products: data?.data ?? [],
     orderSum,
+    deliveryMethod,
     isLoading,
     addToCart,
     changeProductQuantity,
     removeFromCart,
+    setDeliveryMethod,
   };
 
   return (
