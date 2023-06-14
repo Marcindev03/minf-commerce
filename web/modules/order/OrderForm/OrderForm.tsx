@@ -1,5 +1,6 @@
 "use client";
 import { useCreateOrderMutation } from "@modules/api/client";
+import { useCartContext } from "@modules/cart";
 import { CustomButton, CustomFormControl } from "@modules/common";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
@@ -29,6 +30,8 @@ export const OrderForm: FC<OrderFormProps> = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const { deliveryMethod } = useCartContext();
+
   const onSubmit = async (data: Inputs) => {
     try {
       await mutateAsync(
@@ -38,9 +41,9 @@ export const OrderForm: FC<OrderFormProps> = () => {
           firstName: data.firstName,
           lastName: data.lastName,
           delivery: {
-            method: "Express Shipping",
-            price: "10.00",
-            company: "ABC Company",
+            method: deliveryMethod.name,
+            price: deliveryMethod.price.toString(),
+            // company: "ABC Company",
             address: `${data.street} ${data.houseNumber}`,
             city: data.city,
             postcode: `${data.postalCode}`,
