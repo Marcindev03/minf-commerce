@@ -22,17 +22,23 @@ export const requestPaymentUrl = async (
     delivery: { price: shipping },
   } = orderData;
 
-  const cart: CartItem[] = orderData.products.map(({}) => ({
-    sellerId: "123456",
-    sellerCategory: "Electronics",
-    name: "Wireless Keyboard",
-    description: "A wireless keyboard with long-lasting battery life.",
-    quantity: 2,
-    price: 30,
-    number: 987654321,
-  }));
+  const cart: CartItem[] = orderData.products.map(
+    ({ priceBrutto, quantity }) => ({
+      sellerId: "123456",
+      sellerCategory: "Electronics",
+      name: "Wireless Keyboard",
+      description: "A wireless keyboard with long-lasting battery life.",
+      quantity,
+      price: priceBrutto,
+      number: 987654321,
+    })
+  );
 
-  const cartPrice = 1000;
+  const cartPrice =
+    cart.reduce(
+      (acc, val) => acc + (val?.price ?? 0) * (val?.quantity ?? 0),
+      0
+    ) * 100;
   const deliveryPrice = parseFloat(orderData.delivery.price) * 100;
   const amount = cartPrice + deliveryPrice;
 

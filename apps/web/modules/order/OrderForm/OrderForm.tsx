@@ -30,7 +30,7 @@ export const OrderForm: FC<OrderFormProps> = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { deliveryMethod } = useCartContext();
+  const { deliveryMethod, products } = useCartContext();
 
   const onSubmit = async (data: Inputs) => {
     try {
@@ -48,12 +48,10 @@ export const OrderForm: FC<OrderFormProps> = () => {
             city: data.city,
             postcode: `${data.postalCode}`,
           },
-          products: [
-            {
-              productId: "86579706",
-              quantity: 2,
-            },
-          ],
+          products: products.map(({ product_id, quantity }) => ({
+            productId: product_id,
+            quantity,
+          })),
         },
         {
           onSuccess(data, variables, context) {
