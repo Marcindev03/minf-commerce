@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     domains: ["upload.cdn.baselinker.com"],
   },
-  transpilePackages: ["ui"],
+  transpilePackages: ["ui", "database"],
 };
 
 module.exports = nextConfig;
