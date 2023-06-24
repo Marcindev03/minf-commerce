@@ -29,6 +29,11 @@ app.post("/baselinker", (req, res) => {
     const params = transformUrlParamsToObject(urlParams);
 
     const method = urlParams.get("action") as SupportedMethods;
+    const password = urlParams.get("bl_pass");
+
+    if (!password && password !== process.env.BASELINKER_PASSWORD) {
+      return res.status(401).json({ message: "Incorrect baselinker password" });
+    }
 
     return globalHandler(req, res, method, omit(params, ["action", "bl_pass"]));
   });

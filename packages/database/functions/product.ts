@@ -17,10 +17,10 @@ export const getProducts = async (
   limit: number | undefined,
   offset: number | undefined
 ) => {
-  const filters = {};
+  let filters = {};
 
   if (categoryId) {
-    filters["categoryId"] = categoryId;
+    filters = { ...filters, categoryId };
   }
 
   return prisma.product.findMany({
