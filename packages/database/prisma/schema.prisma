@@ -26,17 +26,17 @@ model Product {
   length               Float
   width                Float
   description          String
-  descriptionExtra1    String
-  descriptionExtra2    String
-  descriptionExtra3    String
-  descriptionExtra4    String
+  descriptionExtra1    String?
+  descriptionExtra2    String?
+  descriptionExtra3    String?
+  descriptionExtra4    String?
   manName              String
   baselinkerCategoryId String
   images               String[]
   features             Json
   category             Category @relation(fields: [categoryId], references: [id])
   categoryId           Int
-  order                Order    @relation(fields: [orderId], references: [id])
+  order                Order?   @relation(fields: [orderId], references: [id])
   orderId              Int
 }
 
@@ -61,11 +61,12 @@ model Order {
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  name      String
-  products  Product[]
+  id                   Int       @id @default(autoincrement())
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  name                 String
+  baselinkerCategoryId Int?      @unique
+  products             Product[]
 }
 
 model DeliveryMethod {
