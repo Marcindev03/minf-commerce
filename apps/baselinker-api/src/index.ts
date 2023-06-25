@@ -4,6 +4,7 @@ import { globalHandler } from "./helpers/globalHandler";
 import { SupportedMethods } from "./config/general";
 import { transformUrlParamsToObject } from "./helpers";
 import { omit } from "lodash";
+import { getProducts } from "@minf-commerce/database";
 
 const app = express();
 const port = 4040;
@@ -41,4 +42,11 @@ app.post("/baselinker", (req, res) => {
 
 app.listen(port, async () => {
   console.log(`Server is running on port ${port}`);
+
+  try {
+    await getProducts();
+    console.log("Database connected successfully");
+  } catch (err) {
+    console.log(err);
+  }
 });

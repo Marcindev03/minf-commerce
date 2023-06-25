@@ -3,7 +3,11 @@ const nextConfig = {
   images: {
     domains: ["upload.cdn.baselinker.com"],
   },
-  transpilePackages: ["ui", "database"],
+  transpilePackages: ["ui", "database", "baselinker"],
+  typescript: {
+    // TODO remove ASAP when typescript compilator "Maximum call stack exeeded" error will be removed
+    ignoreBuildErrors: true,
+  },
 };
 
 module.exports = nextConfig;

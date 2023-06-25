@@ -9,6 +9,7 @@ RUN apk add -f --update --no-cache --virtual .gyp nano bash libc6-compat python3
     && apk del .gyp
 
 #############################################
+
 FROM base AS pruned
 WORKDIR /app
 ARG APP
@@ -37,8 +38,6 @@ RUN \
 
 COPY --from=pruned /app/out/full/ .
 COPY turbo.json turbo.json
-
-RUN yarn prisma generate
 
 # For example: `--filter=frontend^...` means all of frontend's dependencies will be built, but not the frontend app itself (which we don't need to do for dev environment)
 RUN turbo run build --no-cache --filter=${APP}
