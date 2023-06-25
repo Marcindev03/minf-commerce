@@ -13,9 +13,9 @@ export const getProduct = async (productId: number) => {
 };
 
 export const getProducts = async (
-  categoryId: number | undefined,
-  limit: number | undefined,
-  offset: number | undefined
+  categoryId?: number,
+  limit?: number,
+  offset?: number
 ) => {
   let filters = {};
 

@@ -1,5 +1,5 @@
 import { Product } from "@modules/api/types";
-import { DeliveryMethod } from "@prisma/client";
+import { DeliveryMethod } from "@minf-commerce/database";
 
 export type CartDeliveryMethod = Omit<
   DeliveryMethod,

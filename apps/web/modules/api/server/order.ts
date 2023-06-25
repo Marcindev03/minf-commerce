@@ -2,8 +2,8 @@ import {
   Order as BaselinkerOrder,
   addOrder,
   setOrderPayment,
-} from "@modules/baselinker";
-import { COUNTRY_CODE } from "@modules/baselinker";
+  COUNTRY_CODE,
+} from "@minf-commerce/baselinker";
 import { OrderSchemaType } from "./schema";
 import { getOrderIdBySessionId } from "@modules/database";
 

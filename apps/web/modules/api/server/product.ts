@@ -4,7 +4,7 @@ import {
   getProduct as getBaselinkerProduct,
   getCategoryIdByName,
   GetProductsParams as getBaselinkerProducsParams,
-} from "@modules/baselinker";
+} from "@minf-commerce/baselinker";
 
 const transformProducts = (products: { [key: string]: ProductData }) =>
   Array.from(Object.entries(products)).map(([productId, product]) => ({

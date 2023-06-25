@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { restClient } from "..";
 import { DeliveryMethodSchemaType } from "@modules/api/server";
-import { DeliveryMethod } from "@prisma/client";
+import { DeliveryMethod } from "@minf-commerce/database";
 
 export const getDeliveryMethods = async (): Promise<{
   data: DeliveryMethod[];
