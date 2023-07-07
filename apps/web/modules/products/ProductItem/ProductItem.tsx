@@ -1,7 +1,7 @@
 import { FC } from "react";
-import Image from "next/image";
 import { Product } from "@modules/api/types";
 import Link from "next/link";
+import { CustomNextImage } from "@modules/common";
 
 type ProductItemProps = {} & Product;
 
@@ -13,7 +13,7 @@ export const ProductItem: FC<ProductItemProps> = ({
 }) => (
   <article className="max-w-[300px] rounded-lg shadow-md overflow-hidden">
     <Link href={`/product/${product_id}`}>
-      <Image
+      <CustomNextImage
         src={images?.[0]}
         alt={name}
         width={300}
