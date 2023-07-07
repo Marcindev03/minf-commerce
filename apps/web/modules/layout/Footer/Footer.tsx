@@ -1,8 +1,8 @@
 import { logoSvgWhiteTransparent } from "@modules/assets";
-import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import { ContentContainer } from "../ContentContainer";
+import { CustomNextImage } from "@modules/common";
 
 type FooterProps = {};
 
@@ -17,7 +17,7 @@ export const Footer: FC<FooterProps> = () => {
           <section className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center text-center">
             <article className="xs:col-span-2 lg:col-span-1">
               <Link href="/">
-                <Image
+                <CustomNextImage
                   src={logoSvgWhiteTransparent}
                   width={150}
                   alt={"MinfCommerceLogo"}
