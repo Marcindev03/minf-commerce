@@ -1,0 +1,17 @@
+<h1>Dostępne opcje dostawy</h1>
+<p-table [value]="deliveryOptions" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Nazwa</th>
+      <th>Cena</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-delivery>
+    <tr>
+      <td>{{ delivery.id }}</td>
+      <td>{{ delivery.name }}</td>
+      <td>{{ delivery.price }}</td>
+    </tr>
+  </ng-template>
+</p-table>
