@@ -1,24 +1,31 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { nanoid } from "nanoid";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const temporaryPreviewUser = {
-          id: "1",
-          name: "Preview User",
-          email: "empty_email@example.com",
-        };
+        const email = credentials?.email;
         const password = credentials?.password;
 
-        if (password && process.env.PREVIEW_PASSWORD === password) {
-          return temporaryPreviewUser;
+        if (
+          email &&
+          email === process.env.ADMIN_EMAIL &&
+          password &&
+          process.env.ADMIN_PASSWORD === password
+        ) {
+          return {
+            id: nanoid(),
+            name: "Admin",
+            email,
+          };
         }
 
         return null;

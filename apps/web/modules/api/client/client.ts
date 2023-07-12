@@ -1,6 +1,7 @@
 import { isDev, isServer } from "@modules/helpers";
 import { useVercelEnv } from "@modules/vercel";
 import { QueryClient } from "@tanstack/react-query";
+// @ts-expect-error
 import { cache } from "react";
 
 export const getQueryClient = cache(() => new QueryClient());
