@@ -1,3 +1,3 @@
 export const DashboardView = () => {
-  return <h1>DashboardView works !</h1>;
+  return <h1>Welcome to dashboard</h1>;
 };
