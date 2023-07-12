@@ -1,4 +1,4 @@
-import { Grid } from "@mantine/core";
+import { Container, Grid } from "@mantine/core";
 import { FC, ReactNode } from "react";
 import { NavbarNested } from "../Navbar/Navbar";
 
@@ -12,7 +12,7 @@ export const AdminLayout: FC<AdminLayoutProps> = ({ children }) => (
       <NavbarNested />
     </Grid.Col>
     <Grid.Col sm={8} lg={7}>
-      {children}
+      <Container py={24}>{children}</Container>
     </Grid.Col>
   </Grid>
 );
