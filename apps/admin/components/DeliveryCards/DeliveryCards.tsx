@@ -1,6 +1,6 @@
 import { SimpleGrid } from "@mantine/core";
 import { FC } from "react";
-import { AdminCard } from "../AdminCard";
+import { AdminCard } from "../AdminCard/AdminCard";
 import { cards } from "./cards";
 
 export const DeliveryCards: FC = () => (
