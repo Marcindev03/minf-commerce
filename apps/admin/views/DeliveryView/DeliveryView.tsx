@@ -1,10 +1,11 @@
-import { Badge, Title } from "@mantine/core";
+import { DeliveryCards } from "@/components";
+import { Title } from "@mantine/core";
 
 export const DeliveryView = () => (
   <>
-    <Title order={1} mb={4}>
-      Delivery View
+    <Title order={1} mb={20}>
+      Manage your deliveries here
     </Title>
-    <Badge>In Progress</Badge>
+    <DeliveryCards />
   </>
 );

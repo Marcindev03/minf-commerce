@@ -1,6 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import Link from "next/link";
-import { useWithLinkStyles } from "./withLink.styles";
+import { CustomNextLink } from "../CustomNextLink/CustomNextLink";
 
 interface WithLinkProps {
   href?: string;
@@ -8,14 +7,8 @@ interface WithLinkProps {
 }
 
 export const WithLink: FC<WithLinkProps> = ({ href, children }) => {
-  const { classes } = useWithLinkStyles();
-
   if (href) {
-    return (
-      <Link href={href} className={classes.link}>
-        {children}
-      </Link>
-    );
+    return <CustomNextLink href={href}>{children}</CustomNextLink>;
   }
 
   return <>{children}</>;

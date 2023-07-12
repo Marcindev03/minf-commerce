@@ -8,8 +8,8 @@ import { navbarItems } from "./navbarItems";
 export function NavbarNested() {
   const { classes } = useNavbarStyles();
   const links = navbarItems.map((item) => (
-    <WithLink href={item.href}>
-      <LinksGroup {...item} key={item.label} />
+    <WithLink href={item.href} key={item.label}>
+      <LinksGroup {...item} />
     </WithLink>
   ));
 

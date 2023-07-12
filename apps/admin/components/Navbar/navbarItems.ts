@@ -11,19 +11,12 @@ export const navbarItems = [
     href: "/admin/dashboard",
   },
   {
-    label: "Delivery Options",
+    label: "Delivery",
     icon: IconTruckDelivery,
-    href: "/admin/delivery",
+    links: [
+      { label: "General", link: "/admin/delivery" },
+      { label: "Delivery Options", link: "/admin/delivery/options/manage" },
+    ],
   },
   { label: "Contact Info", icon: IconAddressBook, href: "/admin/contact" },
-  // {
-  //   label: "Market news",
-  //   icon: IconNotes,
-  //   links: [
-  //     { label: "Overview", link: "/" },
-  //     { label: "Forecasts", link: "/" },
-  //     { label: "Outlook", link: "/" },
-  //     { label: "Real time", link: "/" },
-  //   ],
-  // },
 ];

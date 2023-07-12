@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useCustomLinksGroupStyles } from "./customLinksGroup.styles";
+import { CustomNextLink } from "../CustomNextLink/CustomNextLink";
 
 interface LinksGroupProps {
   icon: FC<any>;
@@ -26,20 +27,14 @@ export const LinksGroup: FC<LinksGroupProps> = ({
   const [opened, setOpened] = useState(initiallyOpened || false);
   const { classes, theme } = useCustomLinksGroupStyles();
 
-  const hasLinks = links?.length;
+  const hasLinks = Array.isArray(links);
 
   const ChevronIcon = theme.dir === "ltr" ? IconChevronRight : IconChevronLeft;
 
   const items = (hasLinks ? links : []).map((link) => (
-    <Text<"a">
-      component="a"
-      className={classes.link}
-      href={link.link}
-      key={link.label}
-      onClick={(event) => event.preventDefault()}
-    >
-      {link.label}
-    </Text>
+    <CustomNextLink href={link.link} key={link.label}>
+      <Text className={classes.link}>{link.label}</Text>
+    </CustomNextLink>
   ));
 
   return (
