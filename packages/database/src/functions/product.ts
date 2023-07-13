@@ -33,6 +33,9 @@ export const getProducts = async (
   });
 };
 
+export const getProductsById = async (idArray: number[]) =>
+  prisma.product.findMany({ where: { id: { in: idArray } } });
+
 export const saveProduct = async (productData: Prisma.ProductCreateInput) => {
   return prisma.product.create({
     data: productData,

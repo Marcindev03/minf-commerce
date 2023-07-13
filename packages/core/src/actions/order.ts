@@ -1,7 +1,21 @@
-import { saveOrder } from "@minf-commerce/database";
+import { COUNTRY_CODE, addOrder } from "@minf-commerce/baselinker";
+import {
+  getDeliveryMethod,
+  getProductsById,
+  saveOrder,
+} from "@minf-commerce/database";
 import { OrderSchemaType } from "../models";
 
 export const createOrder = async (order: OrderSchemaType) => {
+  const [internalOrderId, baselinkerOrderId] = await Promise.all([
+    createDbOrder(order),
+    createBaselinkerOrder(order),
+  ]);
+
+  return { internalOrderId, baselinkerOrderId };
+};
+
+const createDbOrder = async (order: OrderSchemaType) => {
   const { id: internalOrderId } = await saveOrder({
     phone: order.phone,
     email: order.email,
@@ -24,35 +38,45 @@ export const createOrder = async (order: OrderSchemaType) => {
     },
   });
 
-  // const addOrderParams: BaselinkerOrder = {
-  //   phone,
-  //   email,
-  //   delivery_method: method,
-  //   delivery_price: price,
-  //   delivery_fullname: `${firstName} ${lastName}`,
-  //   delivery_company: company,
-  //   delivery_address: address,
-  //   delivery_city: city,
-  //   delivery_state: "",
-  //   delivery_postcode: postcode,
-  //   delivery_country_code: COUNTRY_CODE,
-  //   products: products.map(
-  //     ({ productId, taxRate, priceBrutto, storageId, variantId, ...rest }) => ({
-  //       storage_id: storageId,
-  //       variant_id: variantId,
-  //       product_id: productId,
-  //       tax_rate: taxRate,
-  //       price_brutto: priceBrutto,
-  //       ...rest,
-  //     })
-  //   ),
-  // };
-
-  // const orderId = await addOrder(addOrderParams);
-
-  // return orderId;
-
   return internalOrderId;
+};
+
+const createBaselinkerOrder = async (order: OrderSchemaType) => {
+  const productsIds = order.products.map((product) => product.id);
+
+  const [deliveryMethod, products] = await Promise.all([
+    getDeliveryMethod(order.delivery.id),
+    getProductsById(productsIds),
+  ]);
+
+  const formatAddress = (order: OrderSchemaType) =>
+    `${order.delivery.street} ${order.delivery.houseNumber} ${
+      !!order.delivery.flatNumber && `/${order.delivery.flatNumber}`
+    }`;
+
+  const formatProducts = (order: OrderSchemaType) =>
+    order.products.map((product, i) => ({
+      quantity: product.quantity,
+      product_id: products.find((prod) => prod.id === product.id)
+        ?.baselinkerProductId as string,
+    }));
+
+  const baselinkerOrderId = await addOrder({
+    phone: order.phone,
+    email: order.email,
+    delivery_method: deliveryMethod?.name as string,
+    delivery_price: deliveryMethod?.price.toString() as string,
+    delivery_fullname: `${order.firstName} ${order.lastName}`,
+    delivery_company: "",
+    delivery_address: formatAddress(order),
+    delivery_city: order.delivery.city,
+    delivery_state: "",
+    delivery_postcode: order.delivery.postcode,
+    delivery_country_code: COUNTRY_CODE,
+    products: formatProducts(order),
+  });
+
+  return baselinkerOrderId;
 };
 
 // export const confirmOrderPayment = async (

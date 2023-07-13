@@ -14,7 +14,9 @@ export const POST = async (req: Request) => {
 
   try {
     const validatedData = OrderSchema.parse(body);
-    const orderId = await createOrder(validatedData);
+    const { internalOrderId, baselinkerOrderId } = await createOrder(
+      validatedData
+    );
 
     // Step 3 save baselinker order id and request for payment
     // TODO save baselinker order id
@@ -26,14 +28,13 @@ export const POST = async (req: Request) => {
     // Step 4 save session id in order
     // await saveOrderIdAndSessionId(+orderId, sessionId);
 
-    // return NextResponse.json({
-    //   data: {
-    //     orderId,
-    //     paymentUrl,
-    //   },
-    // });
-
-    return NextResponse.json({});
+    return NextResponse.json({
+      data: {
+        internalOrderId,
+        baselinkerOrderId,
+        // paymentUrl,
+      },
+    });
   } catch (err) {
     console.log(err);
 
