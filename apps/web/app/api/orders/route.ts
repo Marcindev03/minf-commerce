@@ -1,6 +1,5 @@
 import { OrderSchema, createOrder } from "@minf-commerce/core";
-import { saveOrderIdAndSessionId } from "@modules/database";
-import { PaymentError, requestPaymentUrl } from "@modules/payment";
+import { PaymentError } from "@modules/payment";
 import {
   DatabaseErrorResponse,
   PaymentErrorResponse,
@@ -14,6 +13,7 @@ export const POST = async (req: Request) => {
 
   try {
     const validatedData = OrderSchema.parse(body);
+
     const { internalOrderId, baselinkerOrderId } = await createOrder(
       validatedData
     );

@@ -3,6 +3,7 @@ import {
   getDeliveryMethod,
   getProductsById,
   saveOrder,
+  updateOrder,
 } from "@minf-commerce/database";
 import { OrderSchemaType } from "../models";
 
@@ -11,6 +12,11 @@ export const createOrder = async (order: OrderSchemaType) => {
     createDbOrder(order),
     createBaselinkerOrder(order),
   ]);
+
+  await connectInternalOrderWithBaselinkerOrder(
+    internalOrderId,
+    +baselinkerOrderId
+  );
 
   return { internalOrderId, baselinkerOrderId };
 };
@@ -78,6 +84,11 @@ const createBaselinkerOrder = async (order: OrderSchemaType) => {
 
   return baselinkerOrderId;
 };
+
+export const connectInternalOrderWithBaselinkerOrder = async (
+  orderId: number,
+  baselinkerOrderId: number
+) => updateOrder(orderId, { baselinkerOrderId });
 
 // export const confirmOrderPayment = async (
 //   sessionId: string,
