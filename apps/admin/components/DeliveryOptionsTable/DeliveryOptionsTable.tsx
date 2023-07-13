@@ -1,17 +1,13 @@
 import { Table } from "@mantine/core";
 import { DeliveryOptionsTableRow } from "../DeliveryOptionsTableRow/DeliveryOptionsTableRow";
 import { FC } from "react";
-
-const elements = [
-  { id: Math.random().toString(), name: "InPost Kurier", price: 14.55 },
-  { id: Math.random().toString(), name: "InPost Paczkomaty", price: 12.55 },
-  { id: Math.random().toString(), name: "Kurier DPD", price: 18.55 },
-  { id: Math.random().toString(), name: "Kurier Pocztex", price: 17.55 },
-];
+import { useDeliveryStore } from "@/store/delivery";
 
 type DeliveryOptionsTableProps = {};
 
-export const DeliveryOptionsTable: FC<DeliveryOptionsTableProps> = ({}) => {
+export const DeliveryOptionsTable: FC<DeliveryOptionsTableProps> = () => {
+  const deliveyOptions = useDeliveryStore((state) => state.deliveryOptions);
+
   return (
     <Table>
       <thead>
@@ -23,8 +19,8 @@ export const DeliveryOptionsTable: FC<DeliveryOptionsTableProps> = ({}) => {
         </tr>
       </thead>
       <tbody>
-        {elements.map((element) => (
-          <DeliveryOptionsTableRow key={element.id} {...element} />
+        {deliveyOptions.map((deliveyOption) => (
+          <DeliveryOptionsTableRow key={deliveyOption.id} {...deliveyOption} />
         ))}
       </tbody>
     </Table>
