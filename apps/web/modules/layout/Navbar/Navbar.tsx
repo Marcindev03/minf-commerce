@@ -1,7 +1,6 @@
 "use client";
 import { FC, useMemo } from "react";
 import { ContentContainer } from "../ContentContainer";
-import Image from "next/image";
 import { logoSvgColorTransparent } from "@modules/assets";
 import Link from "next/link";
 import { useCategoriesQuery } from "@modules/api/client";
@@ -9,7 +8,7 @@ import { NavbarItem } from "./components";
 import { HiBars3, HiOutlineShoppingCart } from "react-icons/hi2";
 import { MobileSidebar } from "./components/MobileSidebar";
 import { useDisclosure } from "@modules/hooks";
-import { CustomButton } from "@modules/common";
+import { CustomButton, CustomNextImage } from "@modules/common";
 
 type NavbarProps = {};
 
@@ -29,7 +28,7 @@ export const Navbar: FC<NavbarProps> = () => {
         <article className="flex xs:flex-col p-4 lg:flex-row xs:justify-around xs:items-center xs:p-6 relative">
           <section className="xs:w-full lg:w-auto flex justify-center">
             <Link href="/">
-              <Image
+              <CustomNextImage
                 src={logoSvgColorTransparent}
                 width={200}
                 alt="MinfCommerce logo"
