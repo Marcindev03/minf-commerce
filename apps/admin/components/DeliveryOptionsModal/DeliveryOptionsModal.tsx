@@ -4,21 +4,20 @@ import { DeliveryOptionsForm } from "../DeliveryOptionsForm/DeliveryOptionsForm"
 import { useDeliveryStore } from "@/store/delivery";
 import { shallow } from "zustand/shallow";
 
-interface DeliveryOptionsEditModalProps {}
+interface DeliveryOptionsModalProps {}
 
-export const DeliveryOptionsEditModal: FC<
-  DeliveryOptionsEditModalProps
-> = () => {
-  const { isOpen, onClose } = useDeliveryStore(
+export const DeliveryOptionsModal: FC<DeliveryOptionsModalProps> = () => {
+  const { isOpen, onClose, title } = useDeliveryStore(
     (state) => ({
-      isOpen: state.isEditModalOpen,
-      onClose: state.closeEditModal,
+      isOpen: state.isModalOpen,
+      onClose: state.closeModal,
+      title: state.modalTitle,
     }),
     shallow
   );
 
   return (
-    <Modal opened={isOpen} onClose={onClose} title="Edit Delivery Option">
+    <Modal opened={isOpen} onClose={onClose} title={title}>
       <DeliveryOptionsForm />
     </Modal>
   );

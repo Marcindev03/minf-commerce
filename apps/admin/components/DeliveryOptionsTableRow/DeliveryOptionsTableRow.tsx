@@ -13,9 +13,11 @@ export const DeliveryOptionsTableRow: FC<DeliveryOptionsTableRowProps> = ({
   name,
   price,
 }) => {
-  const openEditModal = useDeliveryStore((state) => state.openEditModal);
+  const openEditModal = useDeliveryStore((state) => state.openModal);
+  const setModalTitle = useDeliveryStore((state) => state.setModalTitle);
 
   const handleOnEdit = () => {
+    setModalTitle("Edit Delivery Option");
     openEditModal();
   };
   const handleOnDelete = () => {};

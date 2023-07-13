@@ -1,13 +1,19 @@
 import { create } from "zustand";
 
+type ModalTitle = "Add Delivery Option" | "Edit Delivery Option";
+
 interface DeliveryStore {
-  isEditModalOpen: boolean;
-  openEditModal: () => void;
-  closeEditModal: () => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+  modalTitle: ModalTitle;
+  setModalTitle: (title: ModalTitle) => void;
 }
 
 export const useDeliveryStore = create<DeliveryStore>((set) => ({
-  isEditModalOpen: false,
-  openEditModal: () => set({ isEditModalOpen: true }),
-  closeEditModal: () => set({ isEditModalOpen: false }),
+  isModalOpen: false,
+  openModal: () => set({ isModalOpen: true }),
+  closeModal: () => set({ isModalOpen: false }),
+  modalTitle: "Add Delivery Option",
+  setModalTitle: (title) => set({ modalTitle: title }),
 }));

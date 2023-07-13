@@ -1,11 +1,11 @@
-import { Button } from "@mantine/core";
 import { DeliveryOptionsTable } from "../DeliveryOptionsTable/DeliveryOptionsTable";
-import { DeliveryOptionsModals } from "../DeliveryOptionsModals/DeliveryOptionsModals";
+import { DeliveryOptionsModal } from "../DeliveryOptionsModal/DeliveryOptionsModal";
+import { AddDeliveryOptionButton } from "../AddDeliveryOptionButton/AddDeliveryOptionButton";
 
 export const ManageDeliveryOptions = () => (
   <>
-    <Button>Add delivery option</Button>
+    <AddDeliveryOptionButton />
     <DeliveryOptionsTable />
-    <DeliveryOptionsModals />
+    <DeliveryOptionsModal />
   </>
 );
