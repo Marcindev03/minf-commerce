@@ -8,7 +8,7 @@ import { omit } from "lodash";
 import { getProducts } from "@minf-commerce/database";
 
 const app = express();
-const port = 4040;
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use(morgan("common"));
