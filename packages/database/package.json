@@ -2,8 +2,9 @@
   "name": "@minf-commerce/database",
   "version": "0.0.0",
   "main": "./dist/index.js",
-  "types": "index.ts",
+  "types": "./src/index.ts",
   "scripts": {
+    "dev": "tsc --watch",
     "build": "yarn db:generate && tsc",
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate"
