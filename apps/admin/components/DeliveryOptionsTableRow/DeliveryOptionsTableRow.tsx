@@ -1,3 +1,4 @@
+import { useDeliveryStore } from "@/store/delivery";
 import { Button } from "@mantine/core";
 import { FC } from "react";
 
@@ -5,19 +6,19 @@ type DeliveryOptionsTableRowProps = {
   id: string;
   name: string;
   price: number;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
 };
 
 export const DeliveryOptionsTableRow: FC<DeliveryOptionsTableRowProps> = ({
   id,
   name,
   price,
-  onEdit,
-  onDelete,
 }) => {
-  const handleOnEdit = () => onEdit(id);
-  const handleOnDelete = () => onDelete(id);
+  const openEditModal = useDeliveryStore((state) => state.openEditModal);
+
+  const handleOnEdit = () => {
+    openEditModal();
+  };
+  const handleOnDelete = () => {};
 
   return (
     <tr>

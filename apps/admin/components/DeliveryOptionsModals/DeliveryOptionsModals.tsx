@@ -1,19 +1,10 @@
-import { DeliveryOptionsEditModal } from "@/DeliveryOptionsEditModal/DeliveryOptionsEditModal";
+import { DeliveryOptionsEditModal } from "@/components/DeliveryOptionsEditModal/DeliveryOptionsEditModal";
 import { FC } from "react";
 
-interface DeliveryOptionsModalsProps {
-  isEditModalOpen: boolean;
-  onEditModalClose: () => void;
-}
+interface DeliveryOptionsModalsProps {}
 
-export const DeliveryOptionsModals: FC<DeliveryOptionsModalsProps> = ({
-  isEditModalOpen,
-  onEditModalClose,
-}) => (
+export const DeliveryOptionsModals: FC<DeliveryOptionsModalsProps> = ({}) => (
   <>
-    <DeliveryOptionsEditModal
-      isOpen={isEditModalOpen}
-      onClose={onEditModalClose}
-    />
+    <DeliveryOptionsEditModal />
   </>
 );

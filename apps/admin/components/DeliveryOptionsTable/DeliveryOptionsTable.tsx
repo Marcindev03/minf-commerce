@@ -9,17 +9,9 @@ const elements = [
   { id: Math.random().toString(), name: "Kurier Pocztex", price: 17.55 },
 ];
 
-type DeliveryOptionsTableProps = {
-  onEdit: (id: string) => void;
-  // onDelete: (id: string) => void;
-};
+type DeliveryOptionsTableProps = {};
 
-export const DeliveryOptionsTable: FC<DeliveryOptionsTableProps> = ({
-  onEdit,
-}) => {
-  const handleDeliveryOptionsEdit = (id: string) => onEdit(id);
-  const handleDeliveryOptionsDelete = (id: string) => {};
-
+export const DeliveryOptionsTable: FC<DeliveryOptionsTableProps> = ({}) => {
   return (
     <Table>
       <thead>
@@ -32,12 +24,7 @@ export const DeliveryOptionsTable: FC<DeliveryOptionsTableProps> = ({
       </thead>
       <tbody>
         {elements.map((element) => (
-          <DeliveryOptionsTableRow
-            key={element.id}
-            {...element}
-            onEdit={handleDeliveryOptionsEdit}
-            onDelete={handleDeliveryOptionsDelete}
-          />
+          <DeliveryOptionsTableRow key={element.id} {...element} />
         ))}
       </tbody>
     </Table>
