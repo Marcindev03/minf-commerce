@@ -1,5 +1,4 @@
-import { OrderSchema, createOrder } from "@modules/api/server";
-import { Order } from "@modules/api/types";
+import { OrderSchema, createOrder } from "@minf-commerce/core";
 import { saveOrderIdAndSessionId } from "@modules/database";
 import { PaymentError, requestPaymentUrl } from "@modules/payment";
 import {
@@ -11,25 +10,30 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 export const POST = async (req: Request) => {
-  const body = (await req.json()) as Order;
+  const body = await req.json();
 
   try {
     const validatedData = OrderSchema.parse(body);
     const orderId = await createOrder(validatedData);
 
-    const { link: paymentUrl, sessionId } = await requestPaymentUrl(
-      validatedData,
-      orderId
-    );
+    // Step 3 save baselinker order id and request for payment
+    // TODO save baselinker order id
+    // const { paymentUrl, sessionId } = await requestPaymentUrl(
+    //   validatedData,
+    //   orderId
+    // );
 
-    await saveOrderIdAndSessionId(+orderId, sessionId);
+    // Step 4 save session id in order
+    // await saveOrderIdAndSessionId(+orderId, sessionId);
 
-    return NextResponse.json({
-      data: {
-        orderId,
-        paymentUrl,
-      },
-    });
+    // return NextResponse.json({
+    //   data: {
+    //     orderId,
+    //     paymentUrl,
+    //   },
+    // });
+
+    return NextResponse.json({});
   } catch (err) {
     console.log(err);
 

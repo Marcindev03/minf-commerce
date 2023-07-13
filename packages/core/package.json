@@ -1,0 +1,18 @@
+{
+  "name": "@minf-commerce/core",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@minf-commerce/baselinker": "*",
+    "@minf-commerce/database": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}

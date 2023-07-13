@@ -13,10 +13,10 @@ datasource db {
 }
 
 model Product {
-  id                   Int      @id @default(autoincrement())
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-  baselinkerProductId  String   @unique
+  id                   Int            @id @default(autoincrement())
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  baselinkerProductId  String         @unique
   sku                  String
   ean                  String
   name                 String
@@ -36,18 +36,17 @@ model Product {
   baselinkerCategoryId String
   images               String[]
   features             Json
-  category             Category @relation(fields: [categoryId], references: [id])
+  category             Category       @relation(fields: [categoryId], references: [id])
   categoryId           Int
-  order                Order?   @relation(fields: [orderId], references: [id])
-  orderId              Int
+  OrderProduct         OrderProduct[]
 }
 
 model Order {
   id                Int            @id @default(autoincrement())
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
-  paymentSessionId  String         @unique
-  baselinkerOrderId Int            @unique
+  paymentSessionId  String?
+  baselinkerOrderId Int?
   phone             String
   email             String
   firstName         String
@@ -59,7 +58,18 @@ model Order {
   city              String
   delivery          DeliveryMethod @relation(fields: [deliveryMethodId], references: [id])
   deliveryMethodId  Int
-  products          Product[]
+  orderProducts     OrderProduct[]
+}
+
+model OrderProduct {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
 }
 
 model Category {

@@ -62,5 +62,5 @@ export const requestPaymentUrl = async (
 
   const { link } = await paymentClient.createTransaction(order);
 
-  return { link, sessionId };
+  return { paymentUrl: link, sessionId };
 };

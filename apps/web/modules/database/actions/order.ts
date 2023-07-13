@@ -2,23 +2,23 @@ import { databaseClient } from "../client";
 
 export const saveOrderIdAndSessionId = async (
   orderId: number,
-  sessionId: string
+  paymentSessionId: string
 ) =>
   databaseClient.order.create({
     data: {
-      orderId,
-      sessionId,
+      baselinkerOrderId: orderId,
+      paymentSessionId,
     },
   });
 
-export const getOrderIdBySessionId = async (sessionId: string) => {
+export const getOrderIdBySessionId = async (paymentSessionId: string) => {
   const result = await databaseClient.order.findUnique({
-    where: { sessionId },
-    select: { orderId: true },
+    where: { paymentSessionId },
+    select: { baselinkerOrderId: true },
   });
 
-  if (result?.orderId) {
-    return result.orderId;
+  if (result?.baselinkerOrderId) {
+    return result.baselinkerOrderId;
   }
 
   throw Error("Order Not Found");

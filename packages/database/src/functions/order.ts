@@ -8,7 +8,7 @@ export const getOrder = async (orderId: number) => {
     },
     include: {
       delivery: true,
-      products: true,
+      // products: true,
     },
   });
 };
@@ -17,7 +17,7 @@ export const getOrders = async () => {
   return prisma.order.findMany({
     include: {
       delivery: true,
-      products: true,
+      // products: true,
     },
   });
 };
