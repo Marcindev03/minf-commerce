@@ -1,0 +1,14 @@
+{
+  "name": "@minf-commerce/payment",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@minf-commerce/helpers": "*"
+  }
+}

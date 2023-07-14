@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@minf-commerce/baselinker": "*",
-    "@minf-commerce/database": "*"
+    "@minf-commerce/database": "*",
+    "@minf-commerce/payment": "*"
   },
   "devDependencies": {
     "typescript": "^5.1.6"

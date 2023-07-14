@@ -40,3 +40,14 @@ export const deleteDeliveryMethod = async (deliveryMethodId: number) => {
     },
   });
 };
+
+export const getDeliveryMethodPrice = async (id: number) => {
+  const result = await prisma.deliveryMethod.findUnique({
+    where: { id },
+    select: {
+      price: true,
+    },
+  });
+
+  return result?.price as number;
+};

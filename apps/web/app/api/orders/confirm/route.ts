@@ -5,7 +5,7 @@ import {
   NotificationRequest,
   Verification,
   PaymentError,
-} from "@modules/payment";
+} from "@minf-commerce/payment";
 import { DatabaseErrorResponse, PaymentErrorResponse } from "@modules/server";
 import { NextResponse } from "next/server";
 

@@ -1,3 +1,4 @@
+import { requestPaymentUrl } from "@minf-commerce/payment";
 import { COUNTRY_CODE, addOrder } from "@minf-commerce/baselinker";
 import {
   getDeliveryMethod,
@@ -18,7 +19,14 @@ export const createOrder = async (order: OrderSchemaType) => {
     +baselinkerOrderId
   );
 
-  return { internalOrderId, baselinkerOrderId };
+  const { paymentUrl, sessionId } = await requestPaymentUrl(
+    order,
+    internalOrderId
+  );
+
+  await savePaymentSessionIdInOrder(internalOrderId, sessionId);
+
+  return { internalOrderId, paymentUrl };
 };
 
 const createDbOrder = async (order: OrderSchemaType) => {
@@ -89,6 +97,11 @@ export const connectInternalOrderWithBaselinkerOrder = async (
   orderId: number,
   baselinkerOrderId: number
 ) => updateOrder(orderId, { baselinkerOrderId });
+
+export const savePaymentSessionIdInOrder = async (
+  orderId: number,
+  paymentSessionId: string
+) => updateOrder(orderId, { paymentSessionId });
 
 // export const confirmOrderPayment = async (
 //   sessionId: string,

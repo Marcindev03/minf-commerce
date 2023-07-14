@@ -1,4 +1,3 @@
-import { OrderSchemaType } from "@modules/api/server";
 import {
   PaymentClient,
   Currency,
@@ -8,33 +7,32 @@ import {
 } from "../client";
 
 import { v4 as uuid } from "uuid";
-import { CartItem, Order } from "../types";
-import { useVercelEnv } from "@modules/vercel";
+import { Order } from "../types";
+import { OrderSchemaType } from "@minf-commerce/core";
+import { getDeliveryMethodPrice } from "@minf-commerce/database";
+import { useVercelEnv } from "@minf-commerce/helpers";
 
 export const requestPaymentUrl = async (
   orderData: OrderSchemaType,
-  orderId: string
+  orderId: number
 ) => {
   const sessionId = uuid();
 
-  const {
-    email,
-    delivery: { price: shipping },
-  } = orderData;
-
-  const cart: CartItem[] = orderData.products.map(({}) => ({
-    sellerId: "123456",
-    sellerCategory: "Electronics",
-    name: "Wireless Keyboard",
-    description: "A wireless keyboard with long-lasting battery life.",
-    quantity: 2,
-    price: 30,
-    number: 987654321,
-  }));
+  // TODO Cart
+  // const cart: CartItem[] = orderData.products.map(({}) => ({
+  //   sellerId: "123456",
+  //   sellerCategory: "Electronics",
+  //   name: "Wireless Keyboard",
+  //   description: "A wireless keyboard with long-lasting battery life.",
+  //   quantity: 2,
+  //   price: 30,
+  //   number: 987654321,
+  // }));
 
   const cartPrice = 1000;
-  const deliveryPrice = parseFloat(orderData.delivery.price) * 100;
-  const amount = cartPrice + deliveryPrice;
+  const deliveryMethodPrice =
+    (await getDeliveryMethodPrice(orderData.delivery.id)) * 100;
+  const amount = cartPrice + deliveryMethodPrice;
 
   const order: Order = {
     sessionId: sessionId,
@@ -42,7 +40,7 @@ export const requestPaymentUrl = async (
     currency: Currency.PLN,
     // TODO automate description based on cart
     description: "test order",
-    email,
+    email: orderData.email,
     country: Country.Poland,
     language: Language.PL,
     urlReturn: `${useVercelEnv(
@@ -53,7 +51,7 @@ export const requestPaymentUrl = async (
     encoding: Encoding.UTF8,
     waitForResult: true,
     regulationAccept: false,
-    shipping: parseFloat(shipping),
+    shipping: deliveryMethodPrice,
     // TODO cart
     // cart,
   };
