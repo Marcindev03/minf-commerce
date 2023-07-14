@@ -1,7 +1,18 @@
-import { requestPaymentUrl } from "@minf-commerce/payment";
-import { COUNTRY_CODE, addOrder } from "@minf-commerce/baselinker";
+import {
+  NotificationRequest,
+  Verification,
+  requestPaymentUrl,
+  verifyNotification,
+  verifyPayment,
+} from "@minf-commerce/payment";
+import {
+  COUNTRY_CODE,
+  addOrder,
+  setOrderPayment,
+} from "@minf-commerce/baselinker";
 import {
   getDeliveryMethod,
+  getOrderIdsByPaymentSessionId,
   getProductsById,
   saveOrder,
   updateOrder,
@@ -103,15 +114,45 @@ export const savePaymentSessionIdInOrder = async (
   paymentSessionId: string
 ) => updateOrder(orderId, { paymentSessionId });
 
-// export const confirmOrderPayment = async (
-//   sessionId: string,
-//   payment: {
-//     amount: number;
-//     date: Date;
-//     comment: string;
-//   }
-// ) => {
-//   const orderId = await getOrderIdBySessionId(sessionId);
+export const confirmPayment = async (body: NotificationRequest) => {
+  const isNotificationValid = await verifyNotification(body);
 
-//   return await setOrderPayment(orderId.toString(), payment);
-// };
+  if (isNotificationValid) {
+    const verifyRequest: Verification = {
+      amount: body.amount,
+      currency: body.currency,
+      orderId: body.orderId,
+      sessionId: body.sessionId,
+    };
+
+    const isPaymentValid = await verifyPayment(verifyRequest);
+
+    if (isPaymentValid) {
+      await updateOrderPaymentStatus(body.sessionId, {
+        amount: body.amount / 100,
+        date: new Date(),
+        comment: `Zweryfikowano płatność ${new Date()}`,
+      });
+
+      return {
+        isConnfirmed: true,
+      };
+    }
+  }
+};
+
+export const updateOrderPaymentStatus = async (
+  paymentSessionId: string,
+  payment: {
+    amount: number;
+    date: Date;
+    comment: string;
+  }
+) => {
+  const { internalOrderId, baselinkerOrderId } =
+    await getOrderIdsByPaymentSessionId(paymentSessionId);
+
+  // TODO save payment status in internal databae
+
+  await setOrderPayment(baselinkerOrderId.toString(), payment);
+};

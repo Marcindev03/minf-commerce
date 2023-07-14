@@ -47,3 +47,20 @@ export const deleteOrder = async (orderId: number) => {
     },
   });
 };
+
+export const getOrderIdsByPaymentSessionId = async (
+  paymentSessionId: string
+) => {
+  const result = await prisma.order.findFirst({
+    where: { paymentSessionId },
+    select: {
+      id: true,
+      baselinkerOrderId: true,
+    },
+  });
+
+  return {
+    internalOrderId: result?.id as number,
+    baselinkerOrderId: result?.baselinkerOrderId as number,
+  };
+};
