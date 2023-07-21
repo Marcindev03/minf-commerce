@@ -40,3 +40,5 @@ export const deleteCategory = async (categoryId: number) => {
     },
   });
 };
+
+export const deleteCategories = async () => prisma.category.deleteMany();

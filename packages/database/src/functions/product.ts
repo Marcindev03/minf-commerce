@@ -61,3 +61,5 @@ export const deleteProduct = async (productId: number) => {
     },
   });
 };
+
+export const deleteProducts = async () => await prisma.product.deleteMany();
