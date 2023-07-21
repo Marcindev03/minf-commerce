@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { restClient } from "..";
-import { OrderSchemaType } from "@modules/api/server";
+import { Schema } from "@minf-commerce/core";
 
-export const postOrder = async (order: OrderSchemaType) => {
+export const postOrder = async (order: Schema.OrderSchemaType) => {
   const { data, ok } = await restClient(
     "/orders",
     "POST",

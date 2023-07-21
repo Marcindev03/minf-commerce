@@ -8,12 +8,12 @@ import {
 
 import { v4 as uuid } from "uuid";
 import { Order } from "../types";
-import { OrderSchemaType } from "@minf-commerce/core";
+import { Schema } from "@minf-commerce/core";
 import { getDeliveryMethodPrice } from "@minf-commerce/database";
 import { useVercelEnv } from "@minf-commerce/helpers";
 
 export const requestPaymentUrl = async (
-  orderData: OrderSchemaType,
+  orderData: Schema.OrderSchemaType,
   orderId: number
 ) => {
   const sessionId = uuid();

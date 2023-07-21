@@ -47,6 +47,7 @@ model Order {
   updatedAt         DateTime       @updatedAt
   paymentSessionId  String?
   baselinkerOrderId Int?
+  paymentStatus     String
   phone             String
   email             String
   firstName         String

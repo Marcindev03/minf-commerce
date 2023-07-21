@@ -1,4 +1,4 @@
-import { OrderSchema, createOrder } from "@minf-commerce/core";
+import { Schema, createOrder } from "@minf-commerce/core";
 import { PaymentError } from "@minf-commerce/payment";
 // TODO migrate responses to @minf-commerce/core
 import {
@@ -13,7 +13,7 @@ export const POST = async (req: Request) => {
   const body = await req.json();
 
   try {
-    const validatedData = OrderSchema.parse(body);
+    const validatedData = Schema.OrderSchema.parse(body);
 
     const result = await createOrder(validatedData);
 
@@ -24,7 +24,6 @@ export const POST = async (req: Request) => {
     });
   } catch (err) {
     console.log(err);
-
     if (err instanceof ZodError) {
       return new ZodValidationErrorResponse(err);
     }

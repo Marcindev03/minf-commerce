@@ -11,9 +11,10 @@ import {
 } from "react";
 import { useMap } from "usehooks-ts";
 import { getCartItems, removeCartItem, setCartItem } from "../helpers";
-import { CartContextValue, CartDeliveryMethod, CartItem } from "../types";
+import { CartContextValue, CartItem } from "../types";
 import { useCartProductsQuery } from "@modules/api/client";
 import { EMPTY_CART_CONTEXT, EMPTY_DELIVERY_METHOD } from "@modules/mocks";
+import { DB } from "@minf-commerce/database";
 
 const CartContext = createContext<CartContextValue>(EMPTY_CART_CONTEXT);
 export const useCartContext = () => useContext(CartContext);
@@ -23,7 +24,7 @@ type CartContextProps = {
 };
 
 export const CartContextProvider: FC<CartContextProps> = ({ children }) => {
-  const [deliveryMethod, setDeliveryMethod] = useState<CartDeliveryMethod>(
+  const [deliveryMethod, setDeliveryMethod] = useState<DB.DeliveryMethod>(
     EMPTY_DELIVERY_METHOD
   );
   const [cart, actions] = useMap<string, CartItem>(getCartItems());

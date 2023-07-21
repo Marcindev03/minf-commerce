@@ -11,15 +11,16 @@ import {
   setOrderPayment,
 } from "@minf-commerce/baselinker";
 import {
+  PAYMENT_STATUS,
   getDeliveryMethod,
   getOrderIdsByPaymentSessionId,
   getProductsById,
   saveOrder,
   updateOrder,
 } from "@minf-commerce/database";
-import { OrderSchemaType } from "../models";
+import { Schema } from "..";
 
-export const createOrder = async (order: OrderSchemaType) => {
+export const createOrder = async (order: Schema.OrderSchemaType) => {
   const [internalOrderId, baselinkerOrderId] = await Promise.all([
     createDbOrder(order),
     createBaselinkerOrder(order),
@@ -40,7 +41,7 @@ export const createOrder = async (order: OrderSchemaType) => {
   return { internalOrderId, paymentUrl };
 };
 
-const createDbOrder = async (order: OrderSchemaType) => {
+const createDbOrder = async (order: Schema.OrderSchemaType) => {
   const { id: internalOrderId } = await saveOrder({
     phone: order.phone,
     email: order.email,
@@ -61,12 +62,13 @@ const createDbOrder = async (order: OrderSchemaType) => {
         quantity,
       })),
     },
+    paymentStatus: PAYMENT_STATUS.PENDING,
   });
 
   return internalOrderId;
 };
 
-const createBaselinkerOrder = async (order: OrderSchemaType) => {
+const createBaselinkerOrder = async (order: Schema.OrderSchemaType) => {
   const productsIds = order.products.map((product) => product.id);
 
   const [deliveryMethod, products] = await Promise.all([
@@ -74,12 +76,12 @@ const createBaselinkerOrder = async (order: OrderSchemaType) => {
     getProductsById(productsIds),
   ]);
 
-  const formatAddress = (order: OrderSchemaType) =>
+  const formatAddress = (order: Schema.OrderSchemaType) =>
     `${order.delivery.street} ${order.delivery.houseNumber} ${
       !!order.delivery.flatNumber && `/${order.delivery.flatNumber}`
     }`;
 
-  const formatProducts = (order: OrderSchemaType) =>
+  const formatProducts = (order: Schema.OrderSchemaType) =>
     order.products.map((product, i) => ({
       quantity: product.quantity,
       product_id: products.find((prod) => prod.id === product.id)
@@ -152,7 +154,8 @@ export const updateOrderPaymentStatus = async (
   const { internalOrderId, baselinkerOrderId } =
     await getOrderIdsByPaymentSessionId(paymentSessionId);
 
-  // TODO save payment status in internal databae
-
-  await setOrderPayment(baselinkerOrderId.toString(), payment);
+  await Promise.all([
+    setOrderPayment(baselinkerOrderId.toString(), payment),
+    updateOrder(internalOrderId, { paymentStatus: PAYMENT_STATUS.SUCCESS }),
+  ]);
 };
