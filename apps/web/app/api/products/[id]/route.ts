@@ -1,4 +1,4 @@
-import { getProduct } from "@modules/api/server";
+import { getProduct } from "@minf-commerce/core";
 import { DatabaseErrorResponse, NotFoundErrorResponse } from "@modules/server";
 import { NextResponse } from "next/server";
 

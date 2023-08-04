@@ -30,7 +30,9 @@ export const OrderForm: FC<OrderFormProps> = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { deliveryMethod } = useCartContext();
+  const { deliveryMethod, cart } = useCartContext();
+
+  console.debug(cart);
 
   const onSubmit = async (data: Inputs) => {
     try {
@@ -41,19 +43,16 @@ export const OrderForm: FC<OrderFormProps> = () => {
           firstName: data.firstName,
           lastName: data.lastName,
           delivery: {
-            method: deliveryMethod.name,
-            price: deliveryMethod.price.toString(),
-            // company: "ABC Company",
-            address: `${data.street} ${data.houseNumber}`,
+            id: deliveryMethod.id,
+            street: data.street,
+            houseNumber: +data.houseNumber,
             city: data.city,
-            postcode: `${data.postalCode}`,
+            postcode: data.postalCode,
           },
-          products: [
-            {
-              productId: "86579706",
-              quantity: 2,
-            },
-          ],
+          products: Array.from(cart).map(([key, value]) => ({
+            id: +value.productId,
+            quantity: value.quantity,
+          })),
         },
         {
           onSuccess(data, variables, context) {

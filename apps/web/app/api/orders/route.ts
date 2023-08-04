@@ -1,38 +1,29 @@
-import { OrderSchema, createOrder } from "@modules/api/server";
-import { Order } from "@modules/api/types";
-import { saveOrderIdAndSessionId } from "@modules/database";
-import { PaymentError, requestPaymentUrl } from "@modules/payment";
+import { Schema, createOrder } from "@minf-commerce/core";
+import { PaymentError } from "@minf-commerce/payment";
+// TODO migrate responses to @minf-commerce/core
 import {
   DatabaseErrorResponse,
-  PaymentErrorResponse,
   ZodValidationErrorResponse,
+  PaymentErrorResponse,
 } from "@modules/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 export const POST = async (req: Request) => {
-  const body = (await req.json()) as Order;
+  const body = await req.json();
 
   try {
-    const validatedData = OrderSchema.parse(body);
-    const orderId = await createOrder(validatedData);
+    const validatedData = Schema.OrderSchema.parse(body);
 
-    const { link: paymentUrl, sessionId } = await requestPaymentUrl(
-      validatedData,
-      orderId
-    );
-
-    await saveOrderIdAndSessionId(+orderId, sessionId);
+    const result = await createOrder(validatedData);
 
     return NextResponse.json({
       data: {
-        orderId,
-        paymentUrl,
+        ...result,
       },
     });
   } catch (err) {
     console.log(err);
-
     if (err instanceof ZodError) {
       return new ZodValidationErrorResponse(err);
     }

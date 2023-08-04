@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+}
+
+model Product {
+  id                   Int            @id @default(autoincrement())
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  baselinkerProductId  String         @unique
+  sku                  String
+  ean                  String
+  name                 String
+  quantity             Int
+  price                Float
+  tax                  Float
+  weight               Float
+  height               Float
+  length               Float
+  width                Float
+  description          String
+  descriptionExtra1    String?
+  descriptionExtra2    String?
+  descriptionExtra3    String?
+  descriptionExtra4    String?
+  manName              String
+  baselinkerCategoryId String
+  images               String[]
+  features             Json
+  category             Category       @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  OrderProduct         OrderProduct[]
+}
+
+model Order {
+  id                Int            @id @default(autoincrement())
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  paymentSessionId  String?
+  baselinkerOrderId Int?
+  paymentStatus     String
+  phone             String
+  email             String
+  firstName         String
+  lastName          String
+  street            String
+  houseNumber       Int
+  flatNumber        Int?
+  postalCode        String
+  city              String
+  delivery          DeliveryMethod @relation(fields: [deliveryMethodId], references: [id])
+  deliveryMethodId  Int
+  orderProducts     OrderProduct[]
+}
+
+model OrderProduct {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
+}
+
+model Category {
+  id                   Int       @id @default(autoincrement())
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  name                 String
+  baselinkerCategoryId Int?      @unique
+  products             Product[]
+}
+
+model DeliveryMethod {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  price     Float
+  orders    Order[]
+}

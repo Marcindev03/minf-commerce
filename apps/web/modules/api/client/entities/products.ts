@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "@modules/api/types";
 import qs from "querystringify";
 import { restClient } from "..";
+import { Schema } from "@minf-commerce/core";
 
 export const fetchProducts = async (
   categoryName?: string,
-  productsIds?: string[],
+  productsIds?: number[],
   limit?: number | null
-): Promise<{ data: Product[] }> => {
+): Promise<{ data: Schema.ProductSchemaType[] }> => {
   const query = qs.stringify(
     {
       limit,
@@ -29,7 +29,7 @@ export const fetchProducts = async (
 export const useProductsQueryKey = "products";
 export const useProductsQuery = (
   category: string = "",
-  productsIds: string[] = [],
+  productsIds: number[] = [],
   limit?: number
 ) => {
   const productsLimit = limit ?? null;
@@ -47,7 +47,7 @@ export const useProductsQuery = (
 
 export const fetchProduct = async (
   productId: string
-): Promise<{ data: Product }> => {
+): Promise<{ data: Schema.ProductSchemaType }> => {
   const { data, ok } = await restClient(`/products/${productId}`);
 
   if (!ok) {
@@ -65,7 +65,7 @@ export const useProductQuery = (productId: string) =>
   });
 
 export const useCartProductsQueryKey = "cartProducts";
-export const useCartProductsQuery = (productsIds?: string[]) =>
+export const useCartProductsQuery = (productsIds?: number[]) =>
   useQuery({
     queryKey: [useCartProductsQuery, productsIds],
     queryFn: () => fetchProducts("", productsIds),

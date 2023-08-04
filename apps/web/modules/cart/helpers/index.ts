@@ -1,6 +1,6 @@
 import { CartItem } from "../types";
 
-export const removeCartItem = (id: string) =>
+export const removeCartItem = (id: number) =>
   saveCart((cart) => {
     cart.delete(id);
     return cart;
@@ -25,7 +25,7 @@ const saveCart = (
   );
 };
 
-export const getCartItems = (): Map<string, CartItem> => {
+export const getCartItems = (): Map<number, CartItem> => {
   const jsonCart = global?.window?.localStorage.getItem("cart");
 
   // TODO add cart versioning

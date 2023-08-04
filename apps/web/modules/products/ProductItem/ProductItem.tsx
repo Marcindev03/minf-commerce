@@ -1,18 +1,18 @@
 import { FC } from "react";
-import { Product } from "@modules/api/types";
 import Link from "next/link";
 import { CustomNextImage } from "@modules/common";
+import { Schema } from "@minf-commerce/core";
 
-type ProductItemProps = {} & Product;
+type ProductItemProps = {} & Schema.ProductSchemaType;
 
 export const ProductItem: FC<ProductItemProps> = ({
-  product_id,
-  text_fields: { name },
-  prices,
+  id,
   images,
+  name,
+  price,
 }) => (
   <article className="max-w-[300px] rounded-lg shadow-md overflow-hidden">
-    <Link href={`/product/${product_id}`}>
+    <Link href={`/product/${id}`}>
       <CustomNextImage
         src={images?.[0]}
         alt={name}
@@ -22,7 +22,7 @@ export const ProductItem: FC<ProductItemProps> = ({
       />
       <section className="flex flex-col items-center p-4">
         <p className="text-center">{name}</p>
-        <p>{prices?.[0]} PLN</p>
+        <p>{price} PLN</p>
       </section>
     </Link>
   </article>

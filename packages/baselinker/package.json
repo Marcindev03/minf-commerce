@@ -1,0 +1,11 @@
+{
+  "name": "@minf-commerce/baselinker",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {},
+  "dependencies": {
+    "@minf-commerce/database": "*"
+  },
+  "devDependencies": {}
+}

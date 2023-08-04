@@ -15,7 +15,7 @@
     },
     {
       "name": "Next.js: debug full stack",
-      "cwd": "${workspaceFolder}/web",
+      "cwd": "${workspaceFolder}/apps/web",
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run dev",

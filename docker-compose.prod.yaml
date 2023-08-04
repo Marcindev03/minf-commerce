@@ -1,0 +1,74 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db:/var/lib/postgresql/minf-commerce/data
+    networks:
+      - webNetwork
+      - baselinkerApiNetwork
+
+  web:
+    build:
+      args:
+        - APP=web
+        - START_COMMAND=start
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+    depends_on:
+      - db
+    restart: always
+    environment:
+      # App
+      - APP_URL=${APP_URL}
+      # Tokens
+      - BASELINKER_API_TOKEN=${BASELINKER_API_TOKEN}
+      - PREVIEW_PASSWORD=${PREVIEW_PASSWORD}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      # Payment env
+      - PAYMENT_BASE_URL=${PAYMENT_BASE_URL}
+      - PAYMENT_MERCHANT_ID=${PAYMENT_MERCHANT_ID}
+      - PAYMENT_POS_ID=${PAYMENT_POS_ID}
+      - PAYMENT_API_KEY=${PAYMENT_API_KEY}
+      - PAYMENT_CRC_KEY=${PAYMENT_CRC_KEY}
+      # Database
+      - POSTGRES_PRISMA_URL=postgresql://postgres:postgres@db:5432/postgres
+      - POSTGRES_URL_NON_POOLING=postgresql://postgres:postgres@db:5432/postgres
+    ports:
+      - "4000:3000"
+    networks:
+      - webNetwork
+
+  baselinker-api:
+    build:
+      args:
+        - APP=baselinker-api
+        - START_COMMAND=start
+      context: .
+      dockerfile: ./apps/baselinker-api/Dockerfile
+    depends_on:
+      - db
+    restart: always
+    environment:
+      - POSTGRES_PRISMA_URL=postgresql://postgres:postgres@db:5432/postgres
+      - POSTGRES_URL_NON_POOLING=postgresql://postgres:postgres@db:5432/postgres
+      - BASELINKER_PASSWORD=
+    ports:
+      - "4040:4040"
+    networks:
+      - baselinkerApiNetwork
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  webNetwork:
+    driver: bridge
+  baselinkerApiNetwork:
+    driver: bridge

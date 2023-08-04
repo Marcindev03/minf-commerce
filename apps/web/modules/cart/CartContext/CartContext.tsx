@@ -11,9 +11,10 @@ import {
 } from "react";
 import { useMap } from "usehooks-ts";
 import { getCartItems, removeCartItem, setCartItem } from "../helpers";
-import { CartContextValue, CartDeliveryMethod, CartItem } from "../types";
+import { CartContextValue, CartItem } from "../types";
 import { useCartProductsQuery } from "@modules/api/client";
 import { EMPTY_CART_CONTEXT, EMPTY_DELIVERY_METHOD } from "@modules/mocks";
+import { DB } from "@minf-commerce/database";
 
 const CartContext = createContext<CartContextValue>(EMPTY_CART_CONTEXT);
 export const useCartContext = () => useContext(CartContext);
@@ -23,10 +24,10 @@ type CartContextProps = {
 };
 
 export const CartContextProvider: FC<CartContextProps> = ({ children }) => {
-  const [deliveryMethod, setDeliveryMethod] = useState<CartDeliveryMethod>(
+  const [deliveryMethod, setDeliveryMethod] = useState<DB.DeliveryMethod>(
     EMPTY_DELIVERY_METHOD
   );
-  const [cart, actions] = useMap<string, CartItem>(getCartItems());
+  const [cart, actions] = useMap<number, CartItem>(getCartItems());
 
   const addToCart = (item: CartItem) => {
     if (cart.get(item.productId)) {
@@ -42,7 +43,7 @@ export const CartContextProvider: FC<CartContextProps> = ({ children }) => {
     setCartItem(item);
   };
 
-  const removeFromCart = useCallback((id: string) => {
+  const removeFromCart = useCallback((id: number) => {
     actions.remove(id);
     removeCartItem(id);
   }, []);
@@ -63,9 +64,9 @@ export const CartContextProvider: FC<CartContextProps> = ({ children }) => {
   const orderSum = useMemo(
     () =>
       data?.data
-        .map(({ product_id, prices }) => {
-          const quantity = cart.get(product_id)?.quantity ?? 1;
-          return prices[0] * quantity;
+        .map(({ id, price }) => {
+          const quantity = cart.get(id)?.quantity ?? 1;
+          return price * quantity;
         })
         .reduce((acc, value) => acc + value, 0) ?? 0,
     [cart, data]
