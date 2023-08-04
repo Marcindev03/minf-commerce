@@ -32,6 +32,8 @@ export const OrderForm: FC<OrderFormProps> = () => {
 
   const { deliveryMethod, cart } = useCartContext();
 
+  console.debug(cart);
+
   const onSubmit = async (data: Inputs) => {
     try {
       await mutateAsync(

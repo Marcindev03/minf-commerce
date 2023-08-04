@@ -24,9 +24,9 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
   const product = data?.data;
 
   const handleAddToCart = useCallback(() => {
-    addToCart({ productId: product?.product_id ?? "", quantity: 1 });
+    addToCart({ productId: product?.id as number, quantity: 1 });
     toast.success("Dodano do koszyka");
-  }, [addToCart, product?.product_id]);
+  }, [addToCart, product?.id]);
 
   useEffect(() => {
     const handleWindowScroll = () => {
@@ -59,7 +59,7 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <section className="lg:col-span-2">
-        <h2 className="text-3xl text-center">{product?.text_fields.name}</h2>
+        <h2 className="text-3xl text-center">{product?.name}</h2>
         <hr className="my-4" />
       </section>
       <article className="flex justify-center lg:justify-normal">
@@ -71,7 +71,7 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
         />
       </article>
       <article className="px-4">
-        <p className="text-xl">Cena: {product?.prices?.[0]} zł</p>
+        <p className="text-xl">Cena: {product?.price} zł</p>
         <p className="my-2">Dostępna ilość: {product?.quantity}</p>
         <hr className="my-3" />
         <CustomButton className="hidden lg:block" onClick={handleAddToCart}>
@@ -85,7 +85,7 @@ const ProductPage: FC<ProductPageProps> = ({ params: { id } }) => {
       >
         <h2 className="text-3xl">Opis</h2>
         <hr className="my-4" />
-        <p className="text-justify">{product?.text_fields.description}</p>
+        <p className="text-justify">{product?.description}</p>
         <article
           className={classNames("right-0 bottom-0 w-fit p-4", {
             fixed: isAddToCartButtomFixed,

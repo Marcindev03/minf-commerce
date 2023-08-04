@@ -1,24 +1,24 @@
-import { Product } from "@modules/api/types";
 import { DB } from "@minf-commerce/database";
+import { Schema } from "@minf-commerce/core";
 
 export type CartItem = {
-  productId: string;
+  productId: number;
   quantity: number;
 };
 
 export type CartContextItems = Omit<
-  Map<string, CartItem>,
+  Map<number, CartItem>,
   "set" | "clear" | "delete"
 >;
 
 export interface CartContextValue {
   cart: CartContextItems;
-  products: Product[];
+  products: Schema.ProductSchemaType[];
   orderSum: number;
   deliveryMethod: DB.DeliveryMethod;
   isLoading: boolean;
   addToCart: (item: CartItem) => void;
   changeProductQuantity: (item: CartItem) => void;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: number) => void;
   setDeliveryMethod: (deliveryMethod: DB.DeliveryMethod) => void;
 }

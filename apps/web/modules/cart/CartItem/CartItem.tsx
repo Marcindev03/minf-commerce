@@ -1,49 +1,41 @@
 "use client";
-import { Product } from "@modules/api/types";
 import Link from "next/link";
 import { ChangeEvent, FC, useMemo } from "react";
 import { Card, CustomNextImage } from "@modules/common";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { useCartContext } from "../CartContext";
+import { Schema } from "@minf-commerce/core";
 
 type CartItemProps = {
-  product: Product;
+  product: Schema.ProductSchemaType;
 };
 
 export const CartItem: FC<CartItemProps> = ({
-  product: {
-    product_id,
-    text_fields: { name },
-    prices: [price],
-    images: [imageUrl],
-  },
+  product: { id, images, name, price },
 }) => {
   const { cart, changeProductQuantity, removeFromCart } = useCartContext();
 
   const handleQuantityDecrease = () =>
     changeProductQuantity({
-      productId: product_id,
+      productId: id,
       quantity: quantity <= 1 ? 1 : quantity - 1,
     });
   const handleQuantityIncrease = () =>
-    changeProductQuantity({ productId: product_id, quantity: quantity + 1 });
+    changeProductQuantity({ productId: id, quantity: quantity + 1 });
   const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) =>
-    changeProductQuantity({ productId: product_id, quantity: +e.target.value });
+    changeProductQuantity({ productId: id, quantity: +e.target.value });
 
-  const handleProductDelete = () => removeFromCart(product_id);
+  const handleProductDelete = () => removeFromCart(id);
 
-  const quantity = useMemo(
-    () => cart.get(product_id)?.quantity ?? 1,
-    [cart.get(product_id)]
-  );
+  const quantity = useMemo(() => cart.get(id)?.quantity ?? 1, [cart.get(id)]);
 
   return (
     <Card className="relative mb-6 md:flex">
       <Link
-        href={`/product/${product_id}`}
+        href={`/product/${id}`}
         className="w-full flex justify-center md:justify-start"
       >
-        <CustomNextImage src={imageUrl} alt={name} width={400} height={100} />
+        <CustomNextImage src={images[0]} alt={name} width={400} height={100} />
       </Link>
       <div className="md:w-full ml-6">
         <div className="mt-5">

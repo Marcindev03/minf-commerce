@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { DatabaseErrorResponse } from "@modules/server";
-import { getProducts } from "@modules/api/server";
+import { getProducts } from "@minf-commerce/core";
 
 export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url);
@@ -19,9 +19,11 @@ export const GET = async (req: Request) => {
   const filters = Object.fromEntries(params);
 
   try {
-    const products = await getProducts(filters);
+    const { dbProducts } = await getProducts(filters);
 
-    return NextResponse.json({ data: products });
+    return NextResponse.json({
+      data: dbProducts,
+    });
   } catch (err) {
     console.log(err);
     return new DatabaseErrorResponse();

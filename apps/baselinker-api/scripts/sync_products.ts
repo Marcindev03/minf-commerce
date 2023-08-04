@@ -7,9 +7,9 @@ console.log("Product syncing....");
 const app = async () => {
   await deleteProducts();
 
-  const baselinkerProducts = await getProducts();
+  const { products } = await getProducts();
 
-  const localProducts: Prisma.ProductCreateInput[] = baselinkerProducts.map(
+  const localProducts: Prisma.ProductCreateInput[] = products.map(
     (product) => ({
       baselinkerProductId: product.product_id.toString(),
       sku: product.sku,
@@ -22,6 +22,7 @@ const app = async () => {
       height: product.height,
       length: product.length,
       width: product.width,
+      images: product.images,
       description: product.text_fields.description ?? "",
       manName: "",
       baselinkerCategoryId: product.category_id.toString(),

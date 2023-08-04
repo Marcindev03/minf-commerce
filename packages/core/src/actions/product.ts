@@ -1,10 +1,13 @@
 import {
   ProductData,
   getProducts as getBaselinkerProducs,
-  getProduct as getBaselinkerProduct,
   getCategoryIdByName,
   GetProductsParams as getBaselinkerProducsParams,
 } from "@minf-commerce/baselinker";
+import {
+  getProducts as getDBProducts,
+  getProduct as getDBProduct,
+} from "@minf-commerce/database";
 
 const transformProducts = (products: { [key: string]: ProductData }) =>
   Array.from(Object.entries(products)).map(([productId, product]) => ({
@@ -48,13 +51,16 @@ export const getProducts = async (params?: GetProductsParams) => {
 
   const products = transformProducts(baselinkerProducts.products);
 
-  return products;
+  const dbProducts = await getDBProducts();
+
+  return {
+    products,
+    dbProducts,
+  };
 };
 
 export const getProduct = async (productId: number) => {
-  const baselinkerProduct = await getBaselinkerProduct(productId);
-
-  const product = transformProducts(baselinkerProduct)?.[0] ?? null;
+  const product = await getDBProduct(productId);
 
   return product;
 };
